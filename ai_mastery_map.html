@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Mastery Map — Zero to Principal SDE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#020509; --abyss:#040c14; --deep:#071220; --panel:#0a1929;
+  --glass:rgba(7,18,32,0.94); --rim:rgba(0,200,255,0.1); --rim-h:rgba(0,200,255,0.38);
+  --t:#aac4df; --td:#2e4d64; --tb:#e8f4ff;
+  --f-head:'Bebas Neue',cursive; --f-body:'Manrope',sans-serif; --f-mono:'IBM Plex Mono',monospace;
+  /* domain colors */
+  --math:#ff6b35; --prog:#00d4ff; --ml:#b76cff; --dl:#ff4d94;
+  --nlp:#00e8a2; --cv:#ffd166; --rl:#c084fc; --data:#4ade80;
+  --mlops:#38bdf8; --aws:#ff9900; --gcp:#4285f4; --sys:#f97316;
+  --gen:#e879f9; --lead:#a78bfa;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--t);font-family:var(--f-body);min-height:100vh;overflow-x:hidden}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--rim-h);border-radius:2px}
+#bg{position:fixed;inset:0;z-index:0;pointer-events:none}
+#app{position:relative;z-index:2}
+
+/* ── HERO ── */
+#hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 24px 60px;text-align:center;position:relative;overflow:hidden}
+.orb{position:absolute;border-radius:50%;pointer-events:none;top:50%;left:50%;transform:translate(-50%,-50%)}
+.orb1{width:520px;height:520px;border:1px solid rgba(0,200,255,.05);animation:spin 40s linear infinite}
+.orb2{width:740px;height:740px;border:1px solid rgba(183,108,255,.04);animation:spin 65s linear infinite reverse}
+.orb3{width:960px;height:960px;border:1px solid rgba(0,232,162,.03);animation:spin 88s linear infinite}
+@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.eyebrow{font-family:var(--f-mono);font-size:10px;font-weight:500;letter-spacing:5px;text-transform:uppercase;color:var(--mlops);margin-bottom:18px;animation:up .8s ease both}
+.h1{font-family:var(--f-head);font-size:clamp(52px,9vw,112px);line-height:.92;letter-spacing:2px;color:var(--tb);margin-bottom:10px;animation:up .8s .07s ease both}
+.h1 em{font-style:normal;-webkit-text-fill-color:transparent;-webkit-text-stroke:1px rgba(0,210,255,.75)}
+.hsub{font-size:15px;font-weight:300;color:var(--td);max-width:510px;line-height:1.8;margin:14px auto 44px;animation:up .8s .14s ease both}
+.hpills{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-bottom:50px;animation:up .8s .2s ease both}
+.hpill{font-family:var(--f-mono);font-size:9.5px;padding:4px 13px;border-radius:20px;border:1px solid;letter-spacing:.5px;font-weight:500}
+.hstats{display:flex;gap:44px;flex-wrap:wrap;justify-content:center;animation:up .8s .27s ease both}
+.hs{text-align:center}.hs-n{font-family:var(--f-head);font-size:50px;display:block;line-height:1;background:linear-gradient(135deg,#00d4ff,#b76cff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hs-l{font-size:9.5px;font-family:var(--f-mono);color:var(--td);letter-spacing:2px;text-transform:uppercase;margin-top:3px}
+.scroll-cue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:7px;font-size:9.5px;color:var(--td);font-family:var(--f-mono);letter-spacing:2px;animation:up .8s .34s ease both}
+.caret{width:18px;height:18px;border-right:1.5px solid var(--td);border-bottom:1.5px solid var(--td);transform:rotate(45deg);animation:bob 2s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:rotate(45deg) translateY(0)}50%{transform:rotate(45deg) translateY(6px)}}
+@keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── PHASE SECTIONS ── */
+.phase-sec{border-top:1px solid rgba(0,200,255,.07)}
+.phase-hdr{max-width:1320px;margin:0 auto;padding:60px 28px 24px;display:flex;align-items:center;gap:20px}
+.phase-n{font-family:var(--f-head);font-size:84px;-webkit-text-stroke:1px;color:transparent;line-height:1;flex-shrink:0;opacity:.22}
+.phase-tag{font-family:var(--f-mono);font-size:9px;font-weight:600;letter-spacing:4px;text-transform:uppercase;margin-bottom:5px;display:block}
+.phase-title{font-family:var(--f-head);font-size:clamp(26px,4vw,42px);color:var(--tb);letter-spacing:.5px;line-height:1;margin-bottom:5px}
+.phase-desc{font-size:12.5px;color:var(--td);font-weight:300;max-width:580px;line-height:1.65}
+.p1 .phase-n,.p1 .phase-tag{color:var(--math);-webkit-text-stroke-color:var(--math)}
+.p2 .phase-n,.p2 .phase-tag{color:var(--ml);-webkit-text-stroke-color:var(--ml)}
+.p3 .phase-n,.p3 .phase-tag{color:var(--nlp);-webkit-text-stroke-color:var(--nlp)}
+.p4 .phase-n,.p4 .phase-tag{color:var(--mlops);-webkit-text-stroke-color:var(--mlops)}
+.p5 .phase-n,.p5 .phase-tag{color:var(--gen);-webkit-text-stroke-color:var(--gen)}
+
+/* ── DOMAIN GRID ── */
+.dgrid{max-width:1320px;margin:0 auto;padding:0 20px 40px;display:grid;grid-template-columns:repeat(auto-fill,minmax(296px,1fr));gap:14px}
+.dcard{position:relative;overflow:hidden;background:var(--deep);border:1px solid var(--rim);border-radius:14px;padding:22px;cursor:pointer;transition:border-color .25s,transform .25s,box-shadow .25s}
+.dcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--cc,#00d4ff);transform:scaleX(0);transform-origin:left;transition:transform .28s ease}
+.dcard::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 0%,var(--cc,#00d4ff),transparent 65%);opacity:0;transition:opacity .28s}
+.dcard:hover{border-color:var(--cc,#00d4ff);transform:translateY(-5px);box-shadow:0 24px 60px -12px rgba(0,0,0,.7),inset 0 0 0 1px var(--cc,#00d4ff)}
+.dcard:hover::before{transform:scaleX(1)}.dcard:hover::after{opacity:.06}
+.dci{position:relative;z-index:1}
+.dc-icon{font-size:26px;margin-bottom:10px;display:block;filter:drop-shadow(0 0 8px var(--cc,#00d4ff));transition:filter .25s}
+.dcard:hover .dc-icon{filter:drop-shadow(0 0 18px var(--cc,#00d4ff))}
+.dc-tag{font-family:var(--f-mono);font-size:8.5px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--cc,#00d4ff);margin-bottom:7px;display:block}
+.dc-title{font-family:var(--f-head);font-size:21px;letter-spacing:.4px;color:var(--tb);margin-bottom:7px;line-height:1}
+.dc-desc{font-size:12px;color:var(--td);line-height:1.62;font-weight:300;margin-bottom:13px}
+.dc-chips{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:13px}
+.chip{font-size:9.5px;font-family:var(--f-mono);padding:2px 8px;border-radius:4px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.065);color:var(--td)}
+.dc-foot{display:flex;align-items:center;justify-content:space-between}
+.dc-cnt{font-size:10px;color:var(--td);font-family:var(--f-mono)}
+.dc-arr{font-size:13px;font-weight:700;color:var(--cc,#00d4ff);transition:transform .2s}
+.dcard:hover .dc-arr{transform:translateX(6px)}
+.dc-bar{margin-top:11px;height:2px;background:rgba(255,255,255,.06);border-radius:1px;overflow:hidden}
+.dc-bar-fill{height:100%;border-radius:1px;background:var(--cc,#00d4ff);transition:width .5s ease}
+.dc-pct{font-size:9px;font-family:var(--f-mono);color:var(--td);margin-top:3px;text-align:right;min-height:13px}
+
+/* ── MODAL ── */
+#mbg{position:fixed;inset:0;z-index:900;background:rgba(2,5,9,.88);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;pointer-events:none;transition:opacity .28s}
+#mbg.open{opacity:1;pointer-events:all}
+#modal{width:100%;max-width:880px;max-height:90vh;overflow-y:auto;background:var(--panel);border:1px solid rgba(0,200,255,.28);border-radius:20px;transform:scale(.96) translateY(14px);transition:transform .28s cubic-bezier(.4,0,.2,1);box-shadow:0 40px 100px rgba(0,0,0,.7),0 0 80px -20px rgba(0,200,255,.18)}
+#mbg.open #modal{transform:scale(1) translateY(0)}
+.mhdr{position:sticky;top:0;z-index:10;background:var(--panel);padding:22px 28px 16px;border-bottom:1px solid rgba(255,255,255,.05);display:flex;align-items:flex-start;gap:16px}
+.m-icon{font-size:40px;line-height:1;flex-shrink:0;filter:drop-shadow(0 0 14px var(--mc,#00d4ff))}
+.m-body{flex:1}
+.m-tag{font-family:var(--f-mono);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--mc,#00d4ff);margin-bottom:5px;display:block}
+.m-title{font-family:var(--f-head);font-size:26px;color:var(--tb);letter-spacing:.5px;margin-bottom:5px}
+.m-desc{font-size:12.5px;color:var(--td);line-height:1.62;font-weight:300}
+.m-prog{margin-top:9px}
+.m-pbar{height:3px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden;width:210px}
+.m-pfill{height:100%;background:var(--mc,#00d4ff);border-radius:2px;transition:width .4s ease}
+.m-plbl{font-size:9.5px;font-family:var(--f-mono);color:var(--td);margin-top:4px}
+.m-close{background:none;border:1px solid rgba(255,255,255,.1);border-radius:8px;color:var(--td);cursor:pointer;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:18px;transition:all .2s;flex-shrink:0}
+.m-close:hover{border-color:var(--mc,#00d4ff);color:var(--tb)}
+.mbody{padding:18px 28px 28px}
+
+/* accordion */
+.acc{margin-bottom:9px}
+.acc-h{display:flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid rgba(255,255,255,.06);border-radius:10px;cursor:pointer;transition:all .18s;background:rgba(255,255,255,.018);user-select:none}
+.acc-h:hover{border-color:var(--mc,#00d4ff);background:rgba(255,255,255,.04)}
+.acc-num{font-family:var(--f-mono);font-size:10px;font-weight:600;color:var(--mc,#00d4ff);background:rgba(0,200,255,.07);padding:2px 7px;border-radius:4px;min-width:28px;text-align:center;flex-shrink:0}
+.acc-title{font-size:13px;font-weight:600;color:var(--tb);flex:1}
+.acc-meta{font-size:10px;font-family:var(--f-mono);color:var(--td);flex-shrink:0}
+.acc-tog{color:var(--td);font-size:10px;transition:transform .18s;flex-shrink:0}
+.acc-h.open .acc-tog{transform:rotate(90deg)}
+.acc-b{display:none;padding:10px 6px 2px;animation:acc-in .18s ease}
+.acc-b.open{display:block}
+@keyframes acc-in{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+
+/* topic grid */
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(192px,1fr));gap:7px;margin-bottom:11px}
+.ti{background:rgba(255,255,255,.022);border:1px solid rgba(255,255,255,.05);border-radius:9px;padding:10px 12px;cursor:pointer;position:relative;transition:all .16s}
+.ti:hover{border-color:var(--mc,#00d4ff);background:rgba(255,255,255,.05);transform:translateX(2px)}
+.ti.done{opacity:.52;background:rgba(0,200,255,.04);border-color:rgba(0,200,255,.18)}
+.ti-n{font-size:12px;font-weight:600;color:var(--t);margin-bottom:3px;padding-right:22px;line-height:1.3}
+.ti-d{font-size:10.5px;color:var(--td);line-height:1.5;font-family:var(--f-mono)}
+.ti-chk{position:absolute;top:9px;right:9px;width:16px;height:16px;border-radius:50%;border:1.5px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-size:9px;color:transparent;transition:all .18s}
+.ti.done .ti-chk{background:var(--mc,#00d4ff);border-color:var(--mc,#00d4ff);color:#fff}
+.res-row{display:flex;flex-wrap:wrap;gap:5px;padding:3px 0 6px}
+.res-chip{font-size:10.5px;font-family:var(--f-mono);padding:4px 10px;border-radius:6px;border:1px solid rgba(255,255,255,.08);color:var(--td);cursor:default;display:flex;align-items:center;gap:5px;transition:border-color .18s}
+.res-chip:hover{border-color:var(--mc,#00d4ff);color:var(--t)}
+
+/* ── TIMELINE ── */
+#tl-sec{max-width:1320px;margin:0 auto;padding:56px 28px 80px}
+.tl-h{font-family:var(--f-head);font-size:clamp(30px,5vw,52px);color:var(--tb);letter-spacing:1px;margin-bottom:6px}
+.tl-s{font-size:13px;color:var(--td);font-weight:300;margin-bottom:38px}
+.tl{position:relative;padding-left:28px}
+.tl::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:1.5px;background:linear-gradient(to bottom,var(--prog),var(--ml),var(--dl),var(--nlp),var(--gen));opacity:.3}
+.tl-e{position:relative;margin-bottom:32px}
+.tl-e::before{content:'';position:absolute;left:-22px;top:7px;width:8px;height:8px;border-radius:50%;background:var(--tc,#00d4ff);box-shadow:0 0 10px var(--tc,#00d4ff)}
+.tl-ph{font-family:var(--f-mono);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--tc,#00d4ff);margin-bottom:4px}
+.tl-ti{font-family:var(--f-head);font-size:18px;color:var(--tb);letter-spacing:.4px;margin-bottom:2px}
+.tl-w{font-size:10.5px;color:var(--td);font-family:var(--f-mono);margin-bottom:7px}
+.tl-tags{display:flex;flex-wrap:wrap;gap:4px}
+.tl-tag{font-size:9.5px;font-family:var(--f-mono);padding:2px 7px;border-radius:4px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.065);color:var(--td)}
+
+/* ── PROGRESS WIDGET ── */
+#pw{position:fixed;bottom:20px;right:20px;background:var(--glass);border:1px solid var(--rim-h);border-radius:12px;padding:14px 18px;z-index:800;backdrop-filter:blur(14px);box-shadow:0 8px 32px rgba(0,0,0,.5);min-width:150px}
+.pw-l{font-size:9px;font-family:var(--f-mono);color:var(--td);letter-spacing:2px;text-transform:uppercase;margin-bottom:5px}
+.pw-n{font-family:var(--f-head);font-size:34px;color:var(--tb);line-height:1}
+.pw-s{font-size:9.5px;font-family:var(--f-mono);color:var(--td);margin-top:1px}
+.pw-b{margin-top:9px;height:3px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden}
+.pw-f{height:100%;background:linear-gradient(90deg,#00d4ff,#b76cff);transition:width .5s ease;border-radius:2px}
+
+footer{text-align:center;padding:36px 20px;border-top:1px solid rgba(255,255,255,.04);font-family:var(--f-mono);font-size:11px;color:var(--td)}
+footer strong{color:var(--prog)}
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+<div id="app">
+
+<!-- HERO -->
+<section id="hero">
+  <div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div>
+  <div class="eyebrow">Zero → Principal SDE · Complete AI Mastery Roadmap · Built by Tamaghna Nag</div>
+  <h1 class="h1">MASTER<br><em>ARTIFICIAL</em><br>INTELLIGENCE</h1>
+  <p class="hsub">Every domain, every concept, every tool you need — from first-year math to training foundation models. Click any card to explore in depth.</p>
+  <div class="hpills" id="hpills"></div>
+  <div class="hstats">
+    <div class="hs"><span class="hs-n">14</span><span class="hs-l">Domains</span></div>
+    <div class="hs"><span class="hs-n">160+</span><span class="hs-l">Topics</span></div>
+    <div class="hs"><span class="hs-n">5</span><span class="hs-l">Phases</span></div>
+    <div class="hs"><span class="hs-n">4–6</span><span class="hs-l">Years</span></div>
+  </div>
+  <div class="scroll-cue"><span>EXPLORE</span><div class="caret"></div></div>
+</section>
+
+<div id="phases"></div>
+
+<!-- TIMELINE -->
+<section id="tl-sec">
+  <div class="tl-h">THE JOURNEY</div>
+  <div class="tl-s">Year-by-year milestones from student to Principal SDE</div>
+  <div class="tl" id="tl"></div>
+</section>
+
+<footer>Built for the relentless learner · <strong>Tamaghna Nag</strong> · Click topics to track your progress · Data saved locally</footer>
+</div>
+
+<!-- MODAL -->
+<div id="mbg">
+  <div id="modal">
+    <div class="mhdr">
+      <div class="m-icon" id="m-icon">🧠</div>
+      <div class="m-body">
+        <span class="m-tag" id="m-tag"></span>
+        <div class="m-title" id="m-title"></div>
+        <div class="m-desc" id="m-desc"></div>
+        <div class="m-prog"><div class="m-pbar"><div class="m-pfill" id="m-pfill" style="width:0%"></div></div><div class="m-plbl" id="m-plbl">0 / 0 topics done</div></div>
+      </div>
+      <button class="m-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="mbody" id="mbody"></div>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div id="pw">
+  <div class="pw-l">My Progress</div>
+  <div class="pw-n" id="pw-n">0</div>
+  <div class="pw-s" id="pw-s">of 0 topics</div>
+  <div class="pw-b"><div class="pw-f" id="pw-f" style="width:0%"></div></div>
+</div>
+
+<script>
+/* ===================================================================
+   DATA
+=================================================================== */
+const PHASES_DEF = [
+  {num:'01',cls:'p1',tag:'Phase 01 · Foundations',title:'Mathematics & Programming',desc:'The non-negotiable bedrock. These concepts appear in every algorithm you will ever build. No shortcuts exist here.'},
+  {num:'02',cls:'p2',tag:'Phase 02 · Core AI/ML',title:'Classical ML & Deep Learning',desc:'The algorithmic heart of AI — from linear regression to transformers. Understand the math before you use the API.'},
+  {num:'03',cls:'p3',tag:'Phase 03 · Specializations',title:'NLP · CV · RL · Data Engineering',desc:'Deep vertical expertise. Pick one to master first, but understand all to operate at Principal level.'},
+  {num:'04',cls:'p4',tag:'Phase 04 · Production & Cloud',title:'MLOps · AWS · GCP · Systems Design',desc:'Taking models from notebooks to production systems serving millions. Where most AI engineers are weakest.'},
+  {num:'05',cls:'p5',tag:'Phase 05 · Principal Level',title:'GenAI · Research · Leadership',desc:'The frontier. Foundation models, agents, and the technical leadership skills that define a Principal SDE.'},
+];
+
+const DOMAINS = [
+// PHASE 1
+{id:'math',phase:1,icon:'∑',cc:'var(--math)',tag:'Foundation · Mathematics',title:'MATH FOR AI',
+desc:"The language AI is written in. Every optimization, every architecture, every loss function is math underneath. You can't truly understand what's happening without this.",
+chips:['Linear Algebra','Calculus','Probability','Statistics','Info Theory'],
+sections:[
+  {title:'Linear Algebra',topics:[
+    {n:'Vectors & Vector Spaces',d:'Dot/cross product, span, basis, rank, null space, linear independence'},
+    {n:'Matrix Operations',d:'Multiply, transpose, inverse, determinant, trace — and their geometric meaning'},
+    {n:'Eigenvalues & Eigenvectors',d:'Diagonalization, spectral theorem, PCA foundation, symmetric matrix properties'},
+    {n:'SVD (Singular Value Decomp)',d:'Low-rank approximation, pseudo-inverse, connection to PCA, LSA'},
+    {n:'Norms & Distance Metrics',d:'L1, L2, Frobenius, nuclear norm; cosine similarity; p-norms'},
+    {n:'Matrix Factorizations',d:'LU, QR, Cholesky decompositions — when each is used in ML algorithms'},
+  ],res:['3Blue1Brown — Essence of Linear Algebra (YouTube)','MIT 18.06 — Gilbert Strang (free)','Mathematics for ML — Deisenroth (free PDF)']},
+  {title:'Calculus & Optimization',topics:[
+    {n:'Multivariable Derivatives',d:'Partial derivatives, gradient vectors, directional derivatives, Jacobians'},
+    {n:'Chain Rule (THE backprop rule)',d:'Composite functions — this IS backpropagation. Understand it completely.'},
+    {n:'Hessians & Second-Order',d:'Curvature, saddle points, Newton\'s method, second-order optimization'},
+    {n:'Gradient Descent Family',d:'SGD, momentum, Nesterov, AdaGrad, RMSProp, Adam, AdamW — derive each'},
+    {n:'Convex Optimization',d:'Convex sets/functions, KKT conditions, Lagrange multipliers, duality'},
+    {n:'Numerical Methods',d:'Finite differences, numerical stability, overflow/underflow, log-sum-exp trick'},
+  ],res:['Boyd & Vandenberghe — Convex Optimization (free PDF)','3Blue1Brown — Calculus series','MIT 18.01 OpenCourseWare']},
+  {title:'Probability & Statistics',topics:[
+    {n:'Probability Foundations',d:'Axioms, conditional probability, Bayes theorem — derive everything'},
+    {n:'Key Distributions',d:'Gaussian, Bernoulli, Categorical, Poisson, Beta, Dirichlet — when/why each'},
+    {n:'MLE & MAP Estimation',d:'Maximum Likelihood: the real reason for your loss functions. MAP = regularization.'},
+    {n:'Bayesian Inference',d:'Conjugate priors, MCMC intuition, variational inference introduction'},
+    {n:'Information Theory',d:'Entropy, KL divergence, mutual information, cross-entropy loss derivation'},
+    {n:'Hypothesis Testing for ML',d:'p-values, confidence intervals, permutation tests for A/B model comparison'},
+  ],res:['Blitzstein — Introduction to Probability (Harvard, free)','Think Stats — Downey (free online)','PRML — Bishop Ch.1–2']},
+]},
+
+{id:'prog',phase:1,icon:'</>',cc:'var(--prog)',tag:'Foundation · Engineering',title:'PYTHON & CS CORE',
+desc:'Python is AI\'s native tongue. Master the internals, not just syntax. Plus the CS theory that separates real engineers from people who copy Stack Overflow.',
+chips:['Python Internals','NumPy','Algorithms','Git','Docker','SQL'],
+sections:[
+  {title:'Python Mastery',topics:[
+    {n:'CPython Internals & GIL',d:'Reference counting, memory model, GIL and its implications for ML concurrency'},
+    {n:'OOP & Magic Methods',d:'Dunder methods, metaclasses, descriptors, __slots__, class vs instance attrs'},
+    {n:'Functional Patterns',d:'Generators, itertools, functools, closures, decorators — production Python'},
+    {n:'Concurrency Models',d:'threading vs multiprocessing vs asyncio — which to use for which ML workload'},
+    {n:'Type Hints & Pydantic',d:'mypy, Protocol, TypeVar, dataclasses, pydantic v2 — real-world typed Python'},
+    {n:'Performance & Profiling',d:'cProfile, line_profiler, memory_profiler, Cython basics, vectorization wins'},
+    {n:'Testing with pytest',d:'Fixtures, parametrize, mocking, property-based testing with Hypothesis'},
+  ],res:['Fluent Python — Ramalho (essential read)','Effective Python — Slatkin','Real Python (realpython.com)']},
+  {title:'Scientific Python Stack',topics:[
+    {n:'NumPy — Deep Vectorization',d:'Broadcasting rules, einsum, memory layout (C/F order), ufuncs, striding'},
+    {n:'Pandas — At Scale',d:'GroupBy internals, memory optimization, vectorized ops vs .apply(), chunking'},
+    {n:'Matplotlib & Seaborn',d:'Custom figures, axes manipulation, publication-quality plots, animation'},
+    {n:'SciPy',d:'Optimization routines, sparse matrices, signal processing, statistical tests'},
+  ],res:['Python for Data Analysis — McKinney','NumPy docs — read every section']},
+  {title:'Algorithms & Data Structures',topics:[
+    {n:'Complexity Analysis',d:'Big-O, Theta, Omega, amortized analysis, space-time tradeoffs — think in complexity'},
+    {n:'Core Data Structures',d:'Arrays, hash maps, heaps, BSTs, graphs — implement each from scratch first'},
+    {n:'Sorting Algorithms',d:'QuickSort (in-place, partition), MergeSort, HeapSort — know when each wins'},
+    {n:'Dynamic Programming',d:'Memoization, tabulation, optimal substructure, overlapping subproblems — 50+ problems'},
+    {n:'Graph Algorithms',d:'BFS, DFS, Dijkstra, A*, topological sort, SCC — critical for ML pipeline graphs'},
+    {n:'String & Advanced',d:'Trie, KMP, rolling hash — used in tokenization and text processing at scale'},
+  ],res:['LeetCode — 200 problems minimum (Blind 75 + NeetCode 150)','CLRS — Introduction to Algorithms','NeetCode.io roadmap']},
+  {title:'SWE Practices for ML',topics:[
+    {n:'Git & Branching',d:'GitFlow, trunk-based dev, rebasing, clean commits, large file handling (Git LFS)'},
+    {n:'Docker & Containers',d:'Dockerfile best practices, multi-stage builds, compose for ML service stacks'},
+    {n:'FastAPI for ML Serving',d:'OpenAPI spec, Pydantic models, async handlers, background tasks, streaming'},
+    {n:'SQL — Production Level',d:'Window functions, CTEs, query plans, indexing, PostgreSQL for feature storage'},
+    {n:'CI/CD for ML',d:'GitHub Actions workflows, pre-commit hooks, automated model testing & linting'},
+  ],res:['FastAPI official docs','Docker Deep Dive — Poulton','Use the Index, Luke (SQL tuning)']},
+]},
+
+// PHASE 2
+{id:'ml',phase:2,icon:'⚙',cc:'var(--ml)',tag:'Core AI · Classical ML',title:'CLASSICAL ML',
+desc:"The algorithmic foundation every neural net builds on. Skip this and you're tuning hyperparameters blind. For every algorithm: understand the math, implement from scratch, then use the library.",
+chips:['Supervised','Unsupervised','Ensemble','Feature Eng','Evaluation'],
+sections:[
+  {title:'Supervised Learning',topics:[
+    {n:'Linear & Logistic Regression',d:'MLE derivation, Ridge/Lasso/ElasticNet from scratch, geometric interpretation'},
+    {n:'Decision Trees (CART)',d:'Information gain, Gini impurity, pruning, axis-aligned splits, bias-variance'},
+    {n:'Random Forests',d:'Bagging, OOB error, feature importance, parallelization, out-of-bag score'},
+    {n:'Gradient Boosting (XGBoost/LGB)',d:'Functional gradient descent, regularized trees, DART — know the algorithm not the API'},
+    {n:'Support Vector Machines',d:'Kernel trick (RBF/poly), soft margin SVM, SMO algorithm intuition'},
+    {n:'Naive Bayes Variants',d:'Gaussian, Multinomial, Bernoulli, Complement NB — when it works surprisingly well'},
+    {n:'k-NN & Metric Learning',d:'KD-trees, ball trees, curse of dimensionality, Siamese networks intro'},
+  ],res:['Hands-On ML — Géron 3rd ed','Elements of Statistical Learning (free PDF)','scikit-learn user guide']},
+  {title:'Unsupervised Learning',topics:[
+    {n:'K-Means & K-Means++',d:'WCSS, elbow method, silhouette analysis, mini-batch k-means for large data'},
+    {n:'Hierarchical Clustering',d:'Agglomerative, linkage methods (Ward/complete/average), dendrogram interpretation'},
+    {n:'DBSCAN & Density Methods',d:'Core/border/noise points, epsilon via k-distance graph, HDBSCAN'},
+    {n:'PCA from Scratch',d:'Covariance matrix, eigenvectors, explained variance ratio, whitening, KPCA'},
+    {n:'t-SNE & UMAP',d:'Perplexity parameter, local vs global structure, appropriate use cases for each'},
+    {n:'Gaussian Mixture Models',d:'EM algorithm derivation, covariance types, BIC/AIC, soft clustering'},
+  ],res:['Pattern Recognition & ML — Bishop (PRML)','UMAP paper + Leland McInnes talks']},
+  {title:'Evaluation & Model Selection',topics:[
+    {n:'Cross-Validation Strategies',d:'K-fold, stratified, time-series CV, nested CV, group-k-fold for leakage prevention'},
+    {n:'Bias-Variance Decomposition',d:'Mathematical derivation, double descent phenomenon, modern ML reconciliation'},
+    {n:'Metrics — When to Use What',d:'ROC-AUC vs PR-AUC, F1 vs MCC, NDCG, Cohen\'s kappa — real decision guide'},
+    {n:'Calibration',d:'Reliability diagrams, Platt scaling, isotonic regression, Expected Calibration Error'},
+    {n:'Hyperparameter Optimization',d:'Grid, random, Bayesian (Optuna), Hyperband, ASHA — practical comparison'},
+    {n:'Statistical Model Comparison',d:'McNemar, Wilcoxon signed-rank, permutation tests, effect size reporting'},
+  ],res:['Optuna documentation','ML Mastery — Jason Brownlee (practical guides)']},
+  {title:'Feature Engineering',topics:[
+    {n:'Missing Data (MCAR/MAR/MNAR)',d:'Taxonomy determines strategy — MICE, KNN imputation, indicator variables'},
+    {n:'Encoding Categorical Features',d:'OHE, ordinal, target encoding with smoothing, hash trick at scale'},
+    {n:'Feature Scaling',d:'StandardScaler, MinMax, Robust — which algorithm requires what and why'},
+    {n:'Feature Selection',d:'Filter (mutual info), wrapper (RFE), embedded (SHAP/LASSO), Boruta algorithm'},
+    {n:'Time-Series Features',d:'Lag features, rolling stats, Fourier features, calendar features, tsfresh'},
+  ],res:['Feature Engineering for ML — Zheng & Casari','featuretools documentation']},
+]},
+
+{id:'dl',phase:2,icon:'🧠',cc:'var(--dl)',tag:'Core AI · Deep Learning',title:'DEEP LEARNING',
+desc:'Neural networks from scratch to SOTA. Implement backprop in NumPy before you touch autograd. Understand every operation before you abstract it.',
+chips:['PyTorch','Backprop','CNNs','Transformers','Distributed'],
+sections:[
+  {title:'Neural Network Foundations',topics:[
+    {n:'Forward Pass & Loss Functions',d:'Implement MLP in pure NumPy — MSE, cross-entropy derivations, softmax stability'},
+    {n:'Backpropagation from Scratch',d:'Chain rule application, computation graphs, vanishing/exploding gradients'},
+    {n:'Activation Functions',d:'ReLU family, GELU, Swish, Mish — dying ReLU problem, why GELU in transformers'},
+    {n:'Weight Initialization',d:'Xavier/Glorot, Kaiming/He, orthogonal — derive the variance conditions'},
+    {n:'Normalization Layers',d:'BatchNorm (train vs eval mode), LayerNorm, GroupNorm, RMSNorm — placement matters'},
+    {n:'Regularization Toolkit',d:'Dropout, DropPath, weight decay, label smoothing, mixout, stochastic depth'},
+  ],res:['Deep Learning — Goodfellow et al. (free online)','Andrej Karpathy: Zero to Hero series (YouTube)','CS231n Stanford lecture notes']},
+  {title:'PyTorch — Master This Framework',topics:[
+    {n:'Autograd & Computation Graphs',d:'Dynamic graphs, .backward(), grad_fn, retain_graph, custom autograd Functions'},
+    {n:'nn.Module Architecture',d:'Custom modules, forward/backward hooks, register_buffer, named_modules, apply()'},
+    {n:'DataLoader Internals',d:'Custom Datasets, collate_fn, Sampler, pin_memory, num_workers, prefetch_factor'},
+    {n:'Training Loop Best Practices',d:'Gradient clipping, AMP (torch.cuda.amp), gradient accumulation, grad scaler'},
+    {n:'Distributed Training',d:'DDP (DistributedDataParallel), FSDP sharding strategies, ZeRO-1/2/3, gradient sync'},
+    {n:'torch.compile & Inference',d:'PyTorch 2.x compilation, TorchScript, ONNX export, TorchDynamo internals'},
+    {n:'Profiling & Debugging',d:'torch.profiler, TensorBoard, Weights & Biases, memory profiling, autograd anomaly'},
+  ],res:['PyTorch official tutorials','Effective PyTorch (GitHub)','fast.ai Practical Deep Learning']},
+  {title:'CNNs & Visual Architectures',topics:[
+    {n:'Convolution Math',d:'Strided, dilated, depthwise-separable, transposed convolutions — output size arithmetic'},
+    {n:'Architecture Evolution',d:'LeNet → AlexNet → VGG → ResNet → EfficientNet → ConvNeXt v2 — why each mattered'},
+    {n:'ResNets & Skip Connections',d:'Pre-activation, WideResNet, ResNeXt, SE-Net — how skip connections fix training'},
+    {n:'Transfer Learning',d:'Frozen backbone, gradual unfreezing, discriminative LRs, domain adaptation strategies'},
+  ],res:['timm library — read the source code','Papers With Code SOTA tracker (CV)']},
+  {title:'Attention & Transformers',topics:[
+    {n:'Attention from Scratch',d:'Q/K/V intuition + math, scaled dot-product, masking — implement it yourself'},
+    {n:'Multi-Head Attention',d:'Parallel heads, linear projections, head dimension math, head specialization'},
+    {n:'Full Transformer Architecture',d:'Encoder/decoder, pre vs post-LN, FFN (why 4x width), complete implementation'},
+    {n:'BERT vs GPT Objectives',d:'Masked LM vs causal LM, NSP, bidirectional vs unidirectional attention'},
+    {n:'Vision Transformers (ViT/Swin)',d:'Patch tokenization, shifted windows in Swin, hierarchical features, DeiT'},
+    {n:'Efficient Attention Methods',d:'Flash Attention 1/2 (memory-efficient), MQA, GQA, linear attention, ALiBi'},
+    {n:'Mamba & State Space Models',d:'Selective scan, S4/S6, competing with transformers on long sequences'},
+  ],res:['Attention Is All You Need — Vaswani et al.','The Illustrated Transformer — Jay Alammar','nanoGPT — Andrej Karpathy (GitHub)']},
+  {title:'Optimization & Training at Scale',topics:[
+    {n:'Advanced Optimizers',d:'Adam vs AdamW (weight decay difference), Lion, Sophia, Muon — why Adam still wins'},
+    {n:'LR Scheduling Deep Dive',d:'Warmup (why it matters), cosine annealing, OneCycle, reduce-on-plateau'},
+    {n:'Gradient Clipping & Stability',d:'Global norm clipping, gradient checkpointing for memory, activation recomputation'},
+  ],res:['Chinchilla paper (2022)','The Scheduler Deep-Dive — Sebastian Raschka']},
+]},
+
+// PHASE 3
+{id:'nlp',phase:3,icon:'💬',cc:'var(--nlp)',tag:'Specialization · NLP',title:'NLP & LLMs',
+desc:'From tokenization to fine-tuning 70B models. The hottest domain in AI — where most Principal roles are opening. RAG, RLHF, agents — master them all.',
+chips:['LLMs','RLHF','RAG','LoRA','Agents','Inference'],
+sections:[
+  {title:'Classical NLP (Still Matters)',topics:[
+    {n:'Tokenization Algorithms',d:'BPE from scratch, WordPiece, SentencePiece, Unigram LM — implement BPE yourself'},
+    {n:'Word Embeddings',d:'Word2Vec (CBOW/Skip-gram math), GloVe, FastText, sub-word embeddings'},
+    {n:'Sequence Labeling',d:'NER, POS tagging, CRF, BIO/BIOES tagging, span extraction approaches'},
+    {n:'TF-IDF & BM25',d:'Still in every production retrieval pipeline — BM25 scoring math, IDF weighting'},
+  ],res:['Speech & Language Processing — Jurafsky & Martin (free draft)','spaCy advanced course (free)']},
+  {title:'Large Language Models',topics:[
+    {n:'Pretraining at Scale',d:'Data curation/deduplication, tokenizer training, compute budget (Chinchilla scaling law)'},
+    {n:'Instruction Fine-Tuning (SFT)',d:'Data curation for chat, template formats (ChatML/Llama), quality > quantity'},
+    {n:'RLHF Full Pipeline',d:'Reward model training, PPO for LLMs, KL penalty coefficient — InstructGPT paper'},
+    {n:'DPO & Alignment Methods',d:'Direct Preference Optimization closed-form, ORPO, SimPO, IPO — post-RLHF landscape'},
+    {n:'LoRA & PEFT Methods',d:'Low-Rank Adaptation math, QLoRA 4-bit training, Prefix Tuning, IA3, adapter layers'},
+    {n:'Prompt Engineering (Advanced)',d:'Zero/few-shot, CoT, Self-Consistency, ReAct, ToT, structured outputs (JSON mode)'},
+    {n:'LLM Evaluation',d:'MMLU, HumanEval, MT-Bench, LLM-as-judge, contamination detection, LMSYS Arena'},
+  ],res:['Hugging Face NLP course (free)','LLM course — Sebastian Raschka (GitHub)','InstructGPT & DPO papers']},
+  {title:'RAG Systems (Production)',topics:[
+    {n:'Chunking Strategies',d:'Fixed, recursive, semantic, late chunking — chunk size vs retrieval precision tradeoff'},
+    {n:'Embedding Models',d:'Sentence-BERT, E5, BGE, Nomic — fine-tuning with contrastive loss, Matryoshka'},
+    {n:'Vector Databases',d:'FAISS (IVF/HNSW), Pinecone, Weaviate, Qdrant, Chroma — index type tradeoffs'},
+    {n:'Hybrid Search',d:'BM25 + dense retrieval, Reciprocal Rank Fusion, re-ranking with cross-encoders'},
+    {n:'Advanced RAG Patterns',d:'HyDE, multi-query, FLARE, self-RAG, corrective RAG, agentic RAG patterns'},
+    {n:'RAG Evaluation (RAGAS)',d:'Faithfulness, answer relevance, context recall/precision — automated eval setup'},
+  ],res:['LangChain docs','LlamaIndex docs','RAGAS paper & library (GitHub)']},
+  {title:'LLM Inference & Serving',topics:[
+    {n:'Quantization (GPTQ/AWQ/GGUF)',d:'INT8/INT4, weight-only vs activation quant, quality-latency-memory tradeoffs'},
+    {n:'KV Cache & PagedAttention',d:'vLLM PagedAttention mechanism, prefix caching, GQA/MQA memory savings'},
+    {n:'Speculative Decoding',d:'Draft model, acceptance sampling, 2-3x speedup mechanics and limitations'},
+    {n:'Serving Frameworks',d:'vLLM, TGI (HuggingFace), TensorRT-LLM, llama.cpp — comparison + selection guide'},
+    {n:'Continuous Batching',d:'In-flight batching, throughput vs latency, SLA design for LLM services'},
+  ],res:['vLLM documentation','TGI docs & blog','Efficient LLM Serving survey papers']},
+]},
+
+{id:'cv',phase:3,icon:'👁',cc:'var(--cv)',tag:'Specialization · Computer Vision',title:'COMPUTER VISION',
+desc:'Teaching machines to see — from pixel arithmetic to foundation models that understand any image. Detection, segmentation, diffusion, multimodal.',
+chips:['Detection','Segmentation','Diffusion','ViT','SAM'],
+sections:[
+  {title:'Foundations',topics:[
+    {n:'Image Representation',d:'Tensors, color spaces (RGB/HSV/LAB), image arithmetic, Fourier transforms in vision'},
+    {n:'Classical CV (OpenCV)',d:'Filtering, Canny/Sobel edges, Harris/SIFT/ORB features, optical flow, homography'},
+    {n:'Data Augmentation',d:'Albumentations library, CutMix, MixUp, AutoAugment, TTA at inference time'},
+  ],res:['CS231n Stanford — all lecture notes','PyImageSearch blog']},
+  {title:'Modern Architectures',topics:[
+    {n:'EfficientNet & NAS',d:'Compound scaling (width/depth/resolution), Neural Architecture Search intro'},
+    {n:'Vision Transformers (ViT/Swin)',d:'Patch tokenization, shifted windows, hierarchical features, DeiT, BEiT'},
+    {n:'Self-Supervised Vision',d:'SimCLR, MoCo, DINO v1/v2, MAE — pretraining without labels, foundation models'},
+    {n:'CLIP & Multimodal Alignment',d:'Contrastive image-text pretraining, zero-shot transfer, OpenCLIP, SigLIP'},
+  ],res:['timm library — read the source','Papers With Code CV SOTA']},
+  {title:'Detection & Segmentation',topics:[
+    {n:'YOLO Series (v5–v10)',d:'Anchor design, NMS vs NMS-free, mosaic augmentation, real-time deployment'},
+    {n:'DETR & Anchor-Free',d:'Set prediction with bipartite matching loss, deformable attention, RT-DETR'},
+    {n:'Semantic & Panoptic Seg',d:'SegFormer, Mask2Former, panoptic quality metric, thing vs stuff distinction'},
+    {n:'Segment Anything (SAM/SAM2)',d:'Promptable segmentation, automatic mask generation, SAM 2 for video'},
+  ],res:['MMDetection (OpenMMLab)','Detectron2 docs','SAM paper & interactive demo']},
+  {title:'Generative Vision',topics:[
+    {n:'GANs — Full Treatment',d:'GAN theory, DCGAN, StyleGAN3, Wasserstein GAN, FID/IS metrics, training tricks'},
+    {n:'Diffusion Models from Scratch',d:'DDPM math, noise schedule, score matching, DDIM deterministic sampling — implement'},
+    {n:'Stable Diffusion Architecture',d:'Latent diffusion, U-Net denoiser, CLIP text encoder, VAE, CFG scale'},
+    {n:'ControlNet & IP-Adapter',d:'Conditioning mechanisms, zero-convolutions, reference image conditioning'},
+    {n:'Video Generation',d:'Temporal consistency, DiT-based video (Sora architecture), video diffusion transformers'},
+  ],res:['Annotated Diffusion — HuggingFace blog','HuggingFace Diffusers library']},
+]},
+
+{id:'rl',phase:3,icon:'🎮',cc:'var(--rl)',tag:'Specialization · Reinforcement Learning',title:'REINFORCEMENT LEARNING',
+desc:'Learning by doing. Powers game AI, robotics — and critically, RLHF for aligning LLMs. Understanding RL is now required for serious LLM work.',
+chips:['MDPs','Q-Learning','PPO','RLHF','Multi-Agent'],
+sections:[
+  {title:'RL Fundamentals',topics:[
+    {n:'MDP Framework',d:'States, actions, rewards, transitions, discount factor γ — the formal mathematical setup'},
+    {n:'Bellman Equations',d:'State-value V(s), action-value Q(s,a), Bellman optimality, recursive structure'},
+    {n:'Dynamic Programming',d:'Policy iteration, value iteration — exact methods for small/known MDPs'},
+    {n:'Model-Free Prediction',d:'Monte Carlo returns, TD(0), TD(λ), n-step returns, eligibility traces'},
+    {n:'Exploration Strategies',d:'ε-greedy, UCB (Upper Confidence Bound), Thompson sampling, intrinsic motivation'},
+  ],res:['Sutton & Barto — Reinforcement Learning 2nd ed (free online)','David Silver RL Course — DeepMind (YouTube)']},
+  {title:'Deep Reinforcement Learning',topics:[
+    {n:'DQN & Variants',d:'Experience replay, target network, Double DQN, Dueling DQN, Prioritized Replay, Rainbow'},
+    {n:'Policy Gradient (REINFORCE)',d:'Monte Carlo policy gradient, baseline subtraction, variance reduction techniques'},
+    {n:'Actor-Critic (A2C/A3C)',d:'Advantage estimation, asynchronous training, shared network architecture'},
+    {n:'PPO in Depth',d:'Clipped surrogate objective, GAE (λ), entropy bonus, value loss clipping — the RLHF backbone'},
+    {n:'SAC (Soft Actor-Critic)',d:'Maximum entropy RL, automatic temperature tuning, off-policy, continuous actions'},
+    {n:'Model-Based RL',d:'World models, Dreamer v1/v2/v3, Dyna architecture, planning with learned models'},
+    {n:'Multi-Agent RL',d:'MADDPG, QMIX, emergent communication, cooperative vs competitive, Starcraft II'},
+  ],res:['Spinning Up in Deep RL — OpenAI (free)','CleanRL — single-file implementations (GitHub)']},
+  {title:'RL for LLMs',topics:[
+    {n:'RLHF Complete Pipeline',d:'SFT → Reward Model → PPO fine-tuning — deep dive into InstructGPT paper'},
+    {n:'Reward Model Training',d:'Bradley-Terry model, pairwise comparison data, reward hacking, overoptimization'},
+    {n:'DPO Closed-Form',d:'Implicit reward formulation, why it works without explicit RM, DPO limitations'},
+    {n:'Process Reward Models',d:'Step-level rewards, GRPO (DeepSeek-R1 approach), outcome vs process supervision'},
+    {n:'Constitutional AI',d:'AI feedback (RLAIF), critique and revision loop, scalable oversight approaches'},
+  ],res:['InstructGPT paper (Ouyang et al.)','DPO paper (Rafailov et al.)','DeepSeek-R1 paper','Constitutional AI — Anthropic']},
+]},
+
+{id:'data',phase:3,icon:'🔄',cc:'var(--data)',tag:'Specialization · Data Engineering',title:'DATA ENGINEERING',
+desc:"Garbage in, garbage out. Principal ML engineers build the pipelines that feed models. This is 60% of the real production job that courses never teach.",
+chips:['Spark','Kafka','dbt','Airflow','Lakehouse','Feature Stores'],
+sections:[
+  {title:'Distributed Processing',topics:[
+    {n:'Apache Spark (PySpark)',d:'RDDs → DataFrames, catalyst optimizer, AQE, partitioning strategy, broadcast joins'},
+    {n:'Spark MLlib',d:'Distributed ML pipelines, feature transformers, cross-validation, model persistence'},
+    {n:'Apache Kafka',d:'Topics, partitions, consumer groups, compaction logs, exactly-once semantics (EOS)'},
+    {n:'Stream Processing',d:'Spark Streaming vs Flink: event time, watermarks, stateful ops, windowing strategies'},
+    {n:'Apache Beam',d:'Unified batch+streaming model, Dataflow runner on GCP, portable pipeline SDK'},
+  ],res:['Learning Spark — O\'Reilly (free)','Kafka: The Definitive Guide (free PDF)','Flink documentation']},
+  {title:'Storage Formats & Architecture',topics:[
+    {n:'Columnar Formats',d:'Parquet vs ORC vs Arrow — why columnar wins for analytics, predicate pushdown'},
+    {n:'Delta Lake & Iceberg',d:'ACID transactions on object storage, time travel, schema evolution, merge/upsert'},
+    {n:'Medallion Architecture',d:'Bronze/Silver/Gold data layers, data quality progression, incremental ingestion'},
+    {n:'Feature Stores',d:'Feast, Tecton, Vertex Feature Store — point-in-time correctness, training-serving skew'},
+  ],res:['Fundamentals of Data Engineering — Reis & Housley','Delta Lake docs','Feast documentation']},
+  {title:'Orchestration & Quality',topics:[
+    {n:'Apache Airflow',d:'DAGs, operators, XCom, sensors, dynamic task mapping, task groups, executor types'},
+    {n:'Prefect & Dagster',d:'Data-aware orchestration, software-defined assets, asset-based lineage'},
+    {n:'dbt (Data Build Tool)',d:'SQL-first transforms, ref() lineage, incremental models, testing, macros, seeds'},
+    {n:'Data Quality Frameworks',d:'Great Expectations, Deequ — expectations, data docs, checkpoint pipelines'},
+  ],res:['Airflow documentation','dbt Learn (free courses)','Great Expectations docs']},
+]},
+
+// PHASE 4
+{id:'mlops',phase:4,icon:'⚡',cc:'var(--mlops)',tag:'Production · MLOps',title:'MLOPS',
+desc:'The art of keeping ML alive in production. Where 90% of AI projects fail. Master this and you become irreplaceable at any company.',
+chips:['MLflow','W&B','Kubeflow','Drift','A/B Tests','Serving'],
+sections:[
+  {title:'Experiment Tracking & Registry',topics:[
+    {n:'MLflow Full Platform',d:'Tracking server setup, experiments, runs, artifacts, registry — production deployment'},
+    {n:'Weights & Biases',d:'Sweeps for HPO, artifact versioning, reports, Tables, Weave for LLM evals'},
+    {n:'DVC (Data Version Control)',d:'Versioning datasets + models, DVC pipelines, remote storage (S3/GCS), dvc repro'},
+    {n:'Model Registry Patterns',d:'Staging/production promotion, champion-challenger, approval workflows, model lineage'},
+  ],res:['MLflow documentation','W&B free ML courses','DVC Get Started guide']},
+  {title:'ML Pipeline Platforms',topics:[
+    {n:'Kubeflow Pipelines',d:'KFP DSL, reusable components, artifact tracking, parameter sweeps, caching'},
+    {n:'ZenML',d:'Stack-agnostic ML pipelines, materializers, stack components, cloud connectors'},
+    {n:'Metaflow (Netflix)',d:'Data science-first, @step decorator, S3 artifacts, @retry/@timeout, Argo integration'},
+    {n:'SageMaker Pipelines',d:'Processing/Training/Evaluation/Register steps, conditional execution, lineage'},
+    {n:'Vertex AI Pipelines',d:'Kubeflow-based, managed caching, artifact metadata lineage, CMEK support'},
+  ],res:['Practical MLOps — Gift & Deza','Full Stack Deep Learning — llm.wtf (free)']},
+  {title:'Model Serving & Inference',topics:[
+    {n:'ONNX & Cross-Framework',d:'Export strategies, onnxruntime optimization, quantization, graph optimizations'},
+    {n:'NVIDIA Triton Server',d:'Multi-framework, dynamic batching, model ensemble pipeline, backend plugin API'},
+    {n:'BentoML',d:'Service definition, runners, Yatai for k8s, Adaptive Batching, OpenLLM integration'},
+    {n:'Canary & Shadow Deploys',d:'Traffic splitting, rollback triggers, shadow mode traffic mirroring for safety'},
+    {n:'Latency Optimization',d:'TensorRT compilation, kernel fusion, async preprocessing, batch size tuning'},
+  ],res:['Triton Inference Server docs','BentoML docs','Chip Huyen: Designing ML Systems']},
+  {title:'Monitoring & Observability',topics:[
+    {n:'Data & Prediction Drift',d:'PSI, KS-test, KL divergence, Evidently AI, WhyLogs — continuous monitoring setup'},
+    {n:'Model Performance Monitoring',d:'Business metric alignment, degradation alerts, automated retraining triggers'},
+    {n:'Structured Logging for ML',d:'JSON logs, prediction logging, OpenTelemetry tracing, Jaeger, Grafana dashboards'},
+    {n:'Online A/B Testing',d:'Statistical significance, interleaving, multi-armed bandits, experiment logging'},
+    {n:'SLO/SLA for ML Systems',d:'Latency SLOs, accuracy SLOs, error budgets, on-call runbooks for ML'},
+  ],res:['Evidently AI docs','Designing ML Systems — Chip Huyen (essential)']},
+]},
+
+{id:'aws',phase:4,icon:'☁',cc:'var(--aws)',tag:'Cloud · Amazon Web Services',title:'AWS FOR AI/ML',
+desc:'Amazon dominates enterprise AI/ML. From GPU EC2 instances to SageMaker pipelines to Bedrock for GenAI — the complete production stack.',
+chips:['SageMaker','Bedrock','S3','EKS','Lambda','Spot'],
+sections:[
+  {title:'AWS Core for ML',topics:[
+    {n:'S3 — ML Data Layer',d:'Lifecycle policies, intelligent tiering, S3 Select for partial reads, transfer acceleration'},
+    {n:'EC2 GPU Instances',d:'P3/P4d/P5 selection guide, Spot for training (90% savings), EBS vs EFS for datasets'},
+    {n:'IAM & Security',d:'Least-privilege roles for SageMaker/EKS, VPC endpoints, PrivateLink, SCPs'},
+    {n:'ECR (Container Registry)',d:'Image lifecycle policies, vulnerability scanning, cross-account access patterns'},
+    {n:'Lambda for ML Inference',d:'Container support up to 10GB, cold start mitigation, provisioned concurrency'},
+  ],res:['AWS ML Specialty certification guide','AWS Skill Builder (free training)','AWS Architecture Center']},
+  {title:'SageMaker Full Platform',topics:[
+    {n:'SageMaker Studio',d:'JupyterLab in cloud, Code Editor, managed notebooks, space management'},
+    {n:'Training Jobs',d:'Built-in algorithms, BYOC, Spot training setup, heterogeneous clusters, warm pools'},
+    {n:'SageMaker Experiments',d:'Run tracking, TensorBoard integration, trial components, search & compare'},
+    {n:'Endpoints (Real-time/Async)',d:'Instance selection, multi-model endpoints, async for long inference, serverless'},
+    {n:'Feature Store',d:'Online + offline store, point-in-time query, record ingestion at scale via Kinesis'},
+    {n:'Pipelines (ML CI/CD)',d:'Step types, parallel execution, conditional branching, model approval workflow'},
+    {n:'Clarify',d:'Pre/post-training bias detection, SHAP feature importance, data quality monitoring'},
+    {n:'HyperPod',d:'Distributed training at scale, automatic node recovery, FSDP + Megatron-LM integration'},
+  ],res:['SageMaker Immersion Day (free workshop)','AWS ML Blog','SageMaker Examples GitHub']},
+  {title:'Bedrock & GenAI',topics:[
+    {n:'Foundation Models on Bedrock',d:'Claude, Titan, Llama, Stability, Cohere via Converse API — unified interface'},
+    {n:'Bedrock Knowledge Bases',d:'Managed RAG, S3 source, OpenSearch/Aurora vector store, sync strategies'},
+    {n:'Bedrock Agents',d:'Action groups, OpenAPI tool definitions, Lambda executors, memory, code interpreter'},
+    {n:'Fine-tuning on Bedrock',d:'Continued pretraining, SFT with custom data, provisioned throughput for fine-tuned'},
+    {n:'Bedrock Guardrails',d:'Content filtering, denied topics, PII redaction, grounding checks, custom blocklists'},
+  ],res:['AWS Bedrock Workshop (free)','Amazon Science Blog','Bedrock API documentation']},
+  {title:'Kubernetes & Containers',topics:[
+    {n:'EKS (Elastic k8s Service)',d:'Managed control plane, node groups, Fargate profiles, IRSA, cluster add-ons'},
+    {n:'GPU Operators',d:'NVIDIA GPU operator, time-slicing, MIG partitioning, DCGM metrics for monitoring'},
+    {n:'Karpenter',d:'Node provisioner, Spot integration, consolidation, topology-aware scheduling, NodePools'},
+    {n:'Volcano for ML Scheduling',d:'Gang scheduling, queue management, fair-share, PodGroup for distributed training'},
+  ],res:['EKS Best Practices Guide (free, GitHub)','Karpenter docs','NVIDIA GPU Operator docs']},
+]},
+
+{id:'gcp',phase:4,icon:'🌐',cc:'var(--gcp)',tag:'Cloud · Google Cloud Platform',title:'GCP FOR AI/ML',
+desc:'Google invented transformers, TensorFlow, BigQuery, and TPUs. GCP hosts the most cutting-edge AI infrastructure and the most advanced managed ML platform.',
+chips:['Vertex AI','BigQuery ML','TPUs','Gemini','GKE','Dataflow'],
+sections:[
+  {title:'GCP Core for ML',topics:[
+    {n:'GCS (Cloud Storage)',d:'Bucket IAM, storage classes, FUSE filesystem for training, signed URLs, requester pays'},
+    {n:'Cloud Run for Inference',d:'GPU support in Cloud Run, cold start tuning, revision traffic splits, min-instances'},
+    {n:'IAM & Service Accounts',d:'Workload Identity Federation, SA impersonation, org policies, VPC Service Controls'},
+    {n:'Artifact Registry',d:'Multi-format (Docker, Python, Maven), vulnerability scanning, private PyPI mirror'},
+    {n:'Secret Manager',d:'API key rotation, version pinning, CMEK, access from Vertex/Cloud Run/GKE via SA'},
+  ],res:['Google Cloud Skills Boost (free credits)','GCP Architecture Center','Google Cloud Blog']},
+  {title:'Vertex AI Platform',topics:[
+    {n:'Workbench & Colab Enterprise',d:'Managed JupyterLab, Colab integration, execution environments, user-managed notebooks'},
+    {n:'Training',d:'Custom training, pre-built containers, hyperparameter tuning (Vizier-powered), managed datasets'},
+    {n:'Prediction',d:'Online (<10ms), batch, streaming prediction, traffic splitting, model upload, request logging'},
+    {n:'Feature Store',d:'Online serving, batch serving, feature groups, TTL, time-series monitoring'},
+    {n:'Pipelines',d:'KFP v2 on managed infra, caching, artifact lineage, Vertex ML Metadata, CMEK'},
+    {n:'Model Monitoring',d:'Training-serving skew, prediction drift, Skew Detector, custom monitoring jobs'},
+    {n:'Experiments',d:'TensorBoard Experiment Tracking, run comparison, Vertex ML Metadata integration'},
+    {n:'Search & Conversation',d:'Enterprise search, data store, multi-turn with grounding, citation generation'},
+  ],res:['Vertex AI Codelabs (free)','ML on GCP Specialization — Coursera','Vertex AI documentation']},
+  {title:'Gemini & Google AI',topics:[
+    {n:'Gemini API on Vertex',d:'Multimodal inputs (text/image/audio/video), 1M token context, function calling'},
+    {n:'Gemini Grounding',d:'Google Search grounding, Vertex AI Search grounding, inline citations in responses'},
+    {n:'Model Garden',d:'100+ open models (Llama, Mistral, Falcon), one-click deploy, fine-tune on Vertex'},
+    {n:'Gemini Fine-tuning',d:'Supervised tuning, RLHF tuning via Vertex, PEFT adapter methods, evaluation'},
+    {n:'Agent Builder',d:'No-code/low-code agents, tool integration, Dialogflow CX transition path'},
+  ],res:['Google AI for Developers (ai.google.dev)','Gemini API docs','Model Garden console']},
+  {title:'BigQuery, TPUs & Data',topics:[
+    {n:'BigQuery ML (BQML)',d:'Train/predict in SQL, Vertex AI integration, export model for serving, AutoML Tables'},
+    {n:'BigQuery for Feature Engineering',d:'Window functions, ARRAY/STRUCT types, clustering, partitioned tables, BI Engine'},
+    {n:'Dataflow (Apache Beam)',d:'Managed Beam, streaming feature pipelines, Flex Templates, Dataflow Shuffle'},
+    {n:'TPU Architecture (v4/v5)',d:'TPU VMs vs pod slices, JAX for TPU (jit/pmap/vmap), XLA compiler, profiling'},
+    {n:'GKE + GPU/TPU Workloads',d:'GPU node pools, time-sharing, Autopilot for ML, TPU Multislice training'},
+  ],res:['BigQuery documentation','JAX documentation (jax.readthedocs.io)','TPU Quickstart Guide']},
+]},
+
+{id:'sys',phase:4,icon:'🏗',cc:'var(--sys)',tag:'Engineering · Systems Design',title:'AI SYSTEMS DESIGN',
+desc:'Principal SDEs design systems, not just models. How to architect AI systems that serve millions, at low latency, within budget, with observability.',
+chips:['Distributed','Microservices','Kafka','k8s','Design Interviews'],
+sections:[
+  {title:'Distributed Systems',topics:[
+    {n:'CAP Theorem & Consistency',d:'Strong/eventual/causal consistency models, CRDTs, real-world tradeoff decisions'},
+    {n:'Distributed Consensus (Raft)',d:'Leader election, log replication, split-brain prevention, Raft vs Paxos comparison'},
+    {n:'Replication & Sharding',d:'Leader-follower, multi-leader, consistent hashing, range vs hash sharding strategies'},
+    {n:'Message Queues at Scale',d:'Kafka vs RabbitMQ vs SQS — ordering, delivery guarantees, idempotency, backpressure'},
+    {n:'Service Mesh',d:'Istio/Envoy, mTLS, circuit breaking, traffic management, distributed tracing'},
+  ],res:['Designing Data-Intensive Applications — Kleppmann (DDIA, essential)','Martin Fowler microservices patterns']},
+  {title:'AI System Architectures',topics:[
+    {n:'Feature Pipeline Design',d:'Lambda/Kappa patterns, feature staleness SLAs, dual-write, backfill strategy'},
+    {n:'Two-Tower Retrieval Systems',d:'Item/user towers, ANN serving, online learning, retraining frequency decisions'},
+    {n:'Multi-Stage Ranking',d:'Retrieval → pre-rank → rank → re-rank layers, latency budgets per stage'},
+    {n:'LLM Application Architecture',d:'Router + orchestrator + retrieval + cache + guardrails — full production stack'},
+    {n:'Embedding Serving at Scale',d:'HNSW vs IVF update strategies, freshness vs throughput, partial index updates'},
+    {n:'Training Data Flywheel',d:'Implicit/explicit signals, labeling pipelines, avoiding training-serving skew loops'},
+  ],res:['ML System Design Interview — Alex Xu Vol.2','Designing ML Systems — Chip Huyen']},
+  {title:'Kubernetes for ML',topics:[
+    {n:'k8s Core for ML Engineers',d:'Pods, deployments, services, ingress, PVCs for datasets, configmaps, HPA'},
+    {n:'GPU Resource Management',d:'Requests/limits, QoS classes, GPU time-slicing, MIG, DCGM exporter for Prometheus'},
+    {n:'Autoscaling (HPA/VPA/KEDA)',d:'Queue-depth scaling with KEDA, scale-to-zero for cost, warmup strategies'},
+    {n:'Training Operators',d:'PyTorchJob, TFJob, MXJob CRDs, Kubeflow training operator, gang scheduling'},
+  ],res:['Kubernetes in Action — Lukša','k8s The Hard Way — Kelsey Hightower']},
+]},
+
+// PHASE 5
+{id:'gen',phase:5,icon:'✦',cc:'var(--gen)',tag:'Principal · Frontier AI',title:'GENERATIVE AI & FRONTIER',
+desc:'The bleeding edge. Foundation model training, multimodal systems, AI agents — and the engineering challenges of running them at planetary scale.',
+chips:['LLM Training','MoE','Multimodal','Agents','Diffusion','Scaling'],
+sections:[
+  {title:'Frontier LLM Training',topics:[
+    {n:'Scaling Laws (Chinchilla)',d:'Compute-optimal training, tokens-to-parameters tradeoff, emergent capabilities'},
+    {n:'Mixture of Experts (MoE)',d:'Sparse gating, load balancing loss, expert routing, capacity factor, Mixtral approach'},
+    {n:'3D Parallelism',d:'Data + tensor + pipeline parallel, Megatron-LM, sequence parallelism, reduce-scatter'},
+    {n:'FSDP & ZeRO (DeepSpeed)',d:'Full parameter sharding, ZeRO stages 1/2/3, activation checkpointing memory math'},
+    {n:'Long-Context Methods',d:'RoPE scaling, YaRN, ALiBi, ring attention — extending to 128k+ context lengths'},
+    {n:'Pretraining Data Pipelines',d:'Common Crawl processing, MinHash deduplication, quality filtering (Dolma/Fineweb)'},
+  ],res:['Megatron-LM paper','ZeRO paper (DeepSpeed)','Chinchilla (Hoffmann et al.)','LLM360 papers']},
+  {title:'Multimodal AI',topics:[
+    {n:'Vision-Language Models',d:'LLaVA, InternVL, Qwen-VL — image tokenization strategies, visual instruction tuning'},
+    {n:'Unified Multimodal Tokenization',d:'Discrete image tokens, VQ-VAE, chameleon-style unified seq-to-seq'},
+    {n:'Audio-Language Models',d:'Whisper architecture, SeamlessM4T, real-time voice agents, speech synthesis'},
+    {n:'Multimodal RAG',d:'ColPali (late interaction), multi-vector retrieval, document screenshot indexing'},
+    {n:'Omni Models (GPT-4o style)',d:'Any-to-any architecture, native multimodal training, streaming modalities'},
+  ],res:['LLaVA paper','Whisper paper (Radford et al.)','ColPali paper']},
+  {title:'AI Agents & Compound Systems',topics:[
+    {n:'Agent Framework Design',d:'LangGraph stateful graphs, CrewAI roles, AutoGen patterns — framework tradeoffs'},
+    {n:'Tool Use & Function Calling',d:'JSON schema tools, parallel tool calls, reliability, tool selection evaluations'},
+    {n:'Memory Architecture for Agents',d:'Episodic/semantic/procedural memory layers, MemGPT, external memory systems'},
+    {n:'Multi-Agent Orchestration',d:'Planner-executor, debate, reflection agents, verification loops, consensus'},
+    {n:'Computer Use Agents',d:'Screen understanding, action grounding, Anthropic Computer Use, OSWorld benchmark'},
+    {n:'Agent Safety & Sandboxing',d:'Prompt injection defenses, action space restriction, human-in-the-loop gates'},
+  ],res:['LangGraph documentation','AutoGen paper (Microsoft)','SWE-agent paper','AgentBench benchmark']},
+  {title:'Advanced Generative Systems',topics:[
+    {n:'Diffusion Transformers (DiT)',d:'Patch-based diffusion, class conditioning, Sora-style video generation architecture'},
+    {n:'Flow Matching',d:'Rectified flow, continuous normalizing flows, SD3 approach, straight trajectories'},
+    {n:'Consistency Models',d:'One-step generation, consistency distillation, LCM-LoRA, quality vs speed'},
+    {n:'World Models',d:'Dreamer v3, JEPA (LeCun), video prediction as world model, model-based planning'},
+  ],res:['DiT paper (Peebles & Xie)','Flow Matching paper','Consistency Models paper']},
+]},
+
+{id:'lead',phase:5,icon:'👑',cc:'var(--lead)',tag:'Principal · Leadership',title:'PRINCIPAL SDE SKILLS',
+desc:"The gap between Senior and Principal isn't technical depth — it's breadth, organizational influence, and system-level thinking. These skills determine your ceiling.",
+chips:['RFCs','Roadmaps','Mentoring','Research','Hiring'],
+sections:[
+  {title:'Technical Leadership',topics:[
+    {n:'Writing Compelling RFCs',d:'Problem framing, alternatives considered, decision criteria, building consensus'},
+    {n:'Technical Roadmap Planning',d:'Quarterly/annual planning cycles, buy vs build frameworks, trade-off articulation'},
+    {n:'Architecture Review Process',d:'Running reviews, giving/receiving hard feedback constructively, raising the bar'},
+    {n:'Engineering Excellence',d:'Code review culture, systematic tech debt reduction, reliability SLOs, error budgets'},
+    {n:'Incident Command',d:'On-call leadership, blameless post-mortems, systemic fix advocacy, 5-whys analysis'},
+    {n:'Build vs Buy Framework',d:'TCO analysis, vendor evaluation rubric, make-or-buy decision documentation'},
+  ],res:['Staff Engineer — Will Larson','The Staff Engineer\'s Path — Tanya Reilly','An Elegant Puzzle — Will Larson']},
+  {title:'Research & Innovation',topics:[
+    {n:'Reading Papers Efficiently',d:'Keshav 3-pass method, parse a paper in 30 min, reproduce key result in code'},
+    {n:'Running Internal Research',d:'Hypothesis formulation, ablation studies, reporting standards, null result culture'},
+    {n:'Open Source Contribution',d:'PyTorch/HuggingFace/JAX PRs that get merged, read CONTRIBUTING.md first'},
+    {n:'Conference Publishing',d:'NeurIPS/ICML/ICLR submission process, rebuttal writing, camera-ready preparation'},
+    {n:'Patent Writing',d:'Identifying novel contributions, independent claims, working with IP/legal team'},
+  ],res:['How to Read a Paper — S. Keshav','Papers With Code','arxiv.org daily reading habit']},
+  {title:'Organizational Skills',topics:[
+    {n:'Cross-Functional Influence',d:'PM/Design/Legal/Finance alignment — influencing without direct authority'},
+    {n:'Mentoring vs Sponsorship',d:'Active sponsorship beyond passive mentoring — advocating for engineers in rooms they aren\'t in'},
+    {n:'Hiring & Bar Raising',d:'Designing ML-specific interview loops, bar-raiser role responsibilities, team building'},
+    {n:'Executive Communication',d:'Writing for VP/C-suite, one-pagers, BLUF format, metrics-driven storytelling'},
+    {n:'Managing Up',d:'Giving your manager what they need, healthy escalation paths, disagree and commit'},
+  ],res:['Radical Candor — Kim Scott','High Output Management — Andy Grove','Thinking in Systems — Meadows']},
+]},
+];
+
+const TL_DATA = [
+  {p:'Year 1',c:'var(--prog)',t:'Foundations: Math, Python & Classical ML',w:'Months 0–12',tags:['Linear Algebra','Calculus','Probability','Python Internals','NumPy/Pandas','scikit-learn','Kaggle competitions','LeetCode 150']},
+  {p:'Year 2',c:'var(--dl)',t:'Deep Learning & First Real Project',w:'Months 12–24',tags:['PyTorch from scratch','CNNs','Transformers','NLP or CV specialization','First paper reproduced','Junior role or internship','MLflow/W&B setup']},
+  {p:'Year 3',c:'var(--mlops)',t:'Production Systems & Cloud',w:'Months 24–36',tags:['MLOps full stack','AWS or GCP (get certified)','Docker/Kubernetes','Model monitoring','System design practice','First ML system in prod']},
+  {p:'Year 4',c:'var(--nlp)',t:'Specialization Depth & Technical Leadership',w:'Months 36–48',tags:['LLMs & RAG systems','RLHF pipeline','Distributed training','Leading a project','First RFC authored','Company tech talks']},
+  {p:'Year 5+',c:'var(--gen)',t:'Principal SDE: Frontier & Org Impact',w:'Months 48–72',tags:['Foundation model work','Cross-org architecture leadership','Technical roadmap ownership','Mentoring 3+ engineers','Research publication or patent','Keynote presentations']},
+];
+
+/* ===================================================================
+   STATE
+=================================================================== */
+let done = new Set(JSON.parse(localStorage.getItem('ai_v2_done')||'[]'));
+let curD = null;
+const TOTAL = DOMAINS.reduce((a,d)=>a+d.sections.reduce((b,s)=>b+s.topics.length,0),0);
+
+function save(){localStorage.setItem('ai_v2_done',JSON.stringify([...done]))}
+function tid(did,stitle,i){return `${did}||${stitle}||${i}`}
+function dDone(d){let n=0;d.sections.forEach(s=>s.topics.forEach((_,i)=>{if(done.has(tid(d.id,s.title,i)))n++}));return n}
+function dTotal(d){return d.sections.reduce((a,s)=>a+s.topics.length,0)}
+
+/* ===================================================================
+   STARFIELD
+=================================================================== */
+function initStars(){
+  const c=document.getElementById('bg'),ctx=c.getContext('2d');
+  let W,H,stars;
+  const resize=()=>{W=c.width=innerWidth;H=c.height=innerHeight;stars=Array.from({length:180},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.2+.2,t:Math.random()*Math.PI*2,sp:Math.random()*.004+.001}))};
+  const draw=()=>{ctx.clearRect(0,0,W,H);stars.forEach(s=>{s.t+=s.sp;const a=.15+.5*Math.sin(s.t);ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(180,220,255,${a})`;ctx.fill()});requestAnimationFrame(draw)};
+  resize();addEventListener('resize',resize);draw();
+}
+
+/* ===================================================================
+   HERO PILLS
+=================================================================== */
+const PILL_COLORS = ['var(--math)','var(--prog)','var(--ml)','var(--dl)','var(--nlp)','var(--cv)','var(--rl)','var(--mlops)','var(--aws)','var(--gcp)','var(--gen)','var(--lead)'];
+const PILL_WORDS = ['Transformers','PyTorch','SageMaker','Vertex AI','RLHF','RAG','Diffusion','MLOps','Kubernetes','Spark','LLM Fine-tuning','PPO','Systems Design','Feature Stores'];
+function buildHeroPills(){
+  const el=document.getElementById('hpills');
+  PILL_WORDS.forEach((w,i)=>{const s=document.createElement('span');s.className='hpill';s.textContent=w;s.style.borderColor=PILL_COLORS[i%PILL_COLORS.length];s.style.color=PILL_COLORS[i%PILL_COLORS.length];el.appendChild(s)});
+}
+
+/* ===================================================================
+   BUILD PHASES & CARDS
+=================================================================== */
+function updateCard(d){
+  const tot=dTotal(d),dn=dDone(d),pct=tot>0?Math.round(dn/tot*100):0;
+  const f=document.getElementById(`dpf_${d.id}`);if(f)f.style.width=pct+'%';
+  const p=document.getElementById(`dpct_${d.id}`);if(p)p.textContent=dn>0?`${dn} / ${tot} done`:'';
+}
+function buildCard(d){
+  const c=document.createElement('div');c.className='dcard';c.style.setProperty('--cc',d.cc);
+  const tot=dTotal(d),dn=dDone(d),pct=tot>0?Math.round(dn/tot*100):0;
+  c.innerHTML=`<div class="dci">
+    <span class="dc-icon">${d.icon}</span>
+    <span class="dc-tag">${d.tag}</span>
+    <div class="dc-title">${d.title}</div>
+    <div class="dc-desc">${d.desc}</div>
+    <div class="dc-chips">${d.chips.map(x=>`<span class="chip">${x}</span>`).join('')}</div>
+    <div class="dc-foot"><span class="dc-cnt">${tot} topics · ${d.sections.length} sections</span><span class="dc-arr">→</span></div>
+    <div class="dc-bar"><div class="dc-bar-fill" id="dpf_${d.id}" style="width:${pct}%"></div></div>
+    <div class="dc-pct" id="dpct_${d.id}">${dn>0?`${dn} / ${tot} done`:''}</div>
+  </div>`;
+  c.addEventListener('click',()=>openModal(d.id));return c;
+}
+function buildPhases(){
+  const cont=document.getElementById('phases');
+  PHASES_DEF.forEach(ph=>{
+    const pn=parseInt(ph.num);
+    const sec=document.createElement('section');sec.className=`phase-sec ${ph.cls}`;
+    const phDoms=DOMAINS.filter(d=>d.phase===pn);
+    sec.innerHTML=`<div class="phase-hdr"><div class="phase-n">${ph.num}</div><div><span class="phase-tag">${ph.tag}</span><div class="phase-title">${ph.title}</div><div class="phase-desc">${ph.desc}</div></div></div><div class="dgrid" id="pg${ph.num}"></div>`;
+    cont.appendChild(sec);
+    const grid=sec.querySelector(`#pg${ph.num}`);
+    phDoms.forEach(d=>grid.appendChild(buildCard(d)));
+  });
+}
+
+/* ===================================================================
+   MODAL
+=================================================================== */
+function openModal(id){
+  const d=DOMAINS.find(x=>x.id===id);if(!d)return;curD=d;
+  const tot=dTotal(d),dn=dDone(d),pct=tot>0?Math.round(dn/tot*100):0;
+  document.getElementById('modal').style.setProperty('--mc',d.cc);
+  document.getElementById('m-icon').textContent=d.icon;
+  document.getElementById('m-icon').style.filter=`drop-shadow(0 0 14px ${d.cc})`;
+  document.getElementById('m-tag').textContent=d.tag;
+  document.getElementById('m-title').textContent=d.title;
+  document.getElementById('m-desc').textContent=d.desc;
+  document.getElementById('m-pfill').style.width=pct+'%';
+  document.getElementById('m-plbl').textContent=`${dn} / ${tot} topics done`;
+  document.getElementById('mbody').innerHTML=d.sections.map((s,si)=>{
+    const sid=`acc_${d.id}_${si}`;
+    const topicsHtml=s.topics.map((t,ti)=>{
+      const id=tid(d.id,s.title,ti);
+      const isDone=done.has(id);
+      return `<div class="ti${isDone?' done':''}" id="ti_${d.id}_${si}_${ti}"><div class="ti-n">${t.n}</div><div class="ti-d">${t.d}</div><div class="ti-chk" onclick="toggleTopic(event,'${id}','${d.id}','${si}','${ti}')">✓</div></div>`;
+    }).join('');
+    const resHtml=s.res?`<div class="res-row">${s.res.map(r=>`<span class="res-chip">📚 ${r}</span>`).join('')}</div>`:'';
+    return `<div class="acc"><div class="acc-h" onclick="toggleAcc('${sid}',this)"><span class="acc-num">${String(si+1).padStart(2,'0')}</span><span class="acc-title">${s.title}</span><span class="acc-meta">${s.topics.length} topics</span><span class="acc-tog">▶</span></div><div class="acc-b" id="${sid}"><div class="tgrid">${topicsHtml}</div>${resHtml}</div></div>`;
+  }).join('');
+  document.getElementById('mbg').classList.add('open');
+  document.body.style.overflow='hidden';
+  // open first section
+  setTimeout(()=>{const h=document.querySelector('.acc-h');if(h)toggleAcc(`acc_${d.id}_0`,h)},60);
+}
+
+function closeModal(){document.getElementById('mbg').classList.remove('open');document.body.style.overflow='';curD=null}
+
+function toggleAcc(sid,hdr){
+  const b=document.getElementById(sid);if(!b)return;
+  const isOpen=b.classList.contains('open');
+  b.classList.toggle('open',!isOpen);hdr.classList.toggle('open',!isOpen);
+}
+
+function toggleTopic(e,id,did,si,ti){
+  e.stopPropagation();
+  const el=document.getElementById(`ti_${did}_${si}_${ti}`);
+  if(done.has(id)){done.delete(id);el&&el.classList.remove('done')}
+  else{done.add(id);el&&el.classList.add('done')}
+  save();
+  // update modal progress
+  if(curD){const tot=dTotal(curD),dn=dDone(curD),pct=tot>0?Math.round(dn/tot*100):0;document.getElementById('m-pfill').style.width=pct+'%';document.getElementById('m-plbl').textContent=`${dn} / ${tot} topics done`}
+  updateCard(DOMAINS.find(x=>x.id===did));
+  updateWidget();
+}
+
+/* ===================================================================
+   TIMELINE
+=================================================================== */
+function buildTimeline(){
+  const el=document.getElementById('tl');
+  el.innerHTML=TL_DATA.map(e=>`<div class="tl-e" style="--tc:${e.c}"><div class="tl-ph">${e.p}</div><div class="tl-ti">${e.t}</div><div class="tl-w">${e.w}</div><div class="tl-tags">${e.tags.map(t=>`<span class="tl-tag">${t}</span>`).join('')}</div></div>`).join('');
+}
+
+/* ===================================================================
+   PROGRESS WIDGET
+=================================================================== */
+function updateWidget(){
+  const dn=done.size,pct=TOTAL>0?Math.round(dn/TOTAL*100):0;
+  document.getElementById('pw-n').textContent=dn;
+  document.getElementById('pw-s').textContent=`of ${TOTAL} topics`;
+  document.getElementById('pw-f').style.width=pct+'%';
+}
+
+/* ===================================================================
+   EVENTS
+=================================================================== */
+document.getElementById('mbg').addEventListener('click',e=>{if(e.target===document.getElementById('mbg'))closeModal()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+
+/* ===================================================================
+   INIT
+=================================================================== */
+document.addEventListener('DOMContentLoaded',()=>{
+  initStars();
+  buildHeroPills();
+  buildPhases();
+  buildTimeline();
+  updateWidget();
+});
+</script>
+</body>
+</html>
