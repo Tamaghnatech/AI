@@ -115,17 +115,54 @@ body{background:var(--ink);color:var(--t);font-family:var(--f-body);min-height:1
 @keyframes acc-in{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
 
 /* topic grid */
-.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(192px,1fr));gap:7px;margin-bottom:11px}
-.ti{background:rgba(255,255,255,.022);border:1px solid rgba(255,255,255,.05);border-radius:9px;padding:10px 12px;cursor:pointer;position:relative;transition:all .16s}
-.ti:hover{border-color:var(--mc,#00d4ff);background:rgba(255,255,255,.05);transform:translateX(2px)}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;margin-bottom:11px}
+.ti{background:rgba(255,255,255,.022);border:1px solid rgba(255,255,255,.05);border-radius:9px;padding:10px 12px 10px 12px;cursor:default;position:relative;transition:all .16s}
+.ti:hover{border-color:var(--mc,#00d4ff);background:rgba(255,255,255,.04)}
 .ti.done{opacity:.52;background:rgba(0,200,255,.04);border-color:rgba(0,200,255,.18)}
 .ti-n{font-size:12px;font-weight:600;color:var(--t);margin-bottom:3px;padding-right:22px;line-height:1.3}
 .ti-d{font-size:10.5px;color:var(--td);line-height:1.5;font-family:var(--f-mono)}
 .ti-chk{position:absolute;top:9px;right:9px;width:16px;height:16px;border-radius:50%;border:1.5px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-size:9px;color:transparent;transition:all .18s}
 .ti.done .ti-chk{background:var(--mc,#00d4ff);border-color:var(--mc,#00d4ff);color:#fff}
 .res-row{display:flex;flex-wrap:wrap;gap:5px;padding:3px 0 6px}
-.res-chip{font-size:10.5px;font-family:var(--f-mono);padding:4px 10px;border-radius:6px;border:1px solid rgba(255,255,255,.08);color:var(--td);cursor:default;display:flex;align-items:center;gap:5px;transition:border-color .18s}
-.res-chip:hover{border-color:var(--mc,#00d4ff);color:var(--t)}
+.res-chip{font-size:10.5px;font-family:var(--f-mono);padding:4px 10px;border-radius:6px;border:1px solid rgba(255,255,255,.08);color:var(--td);cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .18s;text-decoration:none}
+.res-chip:hover{border-color:var(--mc,#00d4ff);color:var(--tb);background:rgba(0,200,255,.07);transform:translateY(-1px)}
+.res-chip.has-link{border-color:rgba(0,200,255,.2);color:var(--mlops)}
+.res-chip.has-link:hover{border-color:var(--mc,#00d4ff);background:rgba(0,200,255,.1)}
+/* topic resource links */
+.ti-links{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}
+.ti-link{font-size:9px;font-family:var(--f-mono);padding:2px 7px;border-radius:4px;border:1px solid rgba(255,255,255,.08);color:var(--td);cursor:pointer;text-decoration:none;transition:all .15s;display:inline-flex;align-items:center;gap:3px;background:rgba(255,255,255,.02)}
+.ti-link:hover{border-color:var(--mc,#00d4ff);color:var(--tb);background:rgba(0,200,255,.07)}
+.ti-link.yt{border-color:rgba(255,80,80,.25);color:rgba(255,130,130,.8)}
+.ti-link.yt:hover{border-color:#ff5050;background:rgba(255,50,50,.08);color:#ff8080}
+.ti-link.paper{border-color:rgba(183,108,255,.25);color:rgba(183,108,255,.8)}
+.ti-link.paper:hover{border-color:#b76cff;background:rgba(183,108,255,.08);color:#b76cff}
+.ti-link.doc{border-color:rgba(0,200,100,.25);color:rgba(0,200,100,.8)}
+.ti-link.doc:hover{border-color:#00e8a2;background:rgba(0,200,100,.08);color:#00e8a2}
+.ti-link.book{border-color:rgba(255,193,64,.25);color:rgba(255,193,64,.8)}
+.ti-link.book:hover{border-color:#ffd166;background:rgba(255,193,64,.08);color:#ffd166}
+/* search bar */
+#search-wrap{position:sticky;top:0;z-index:500;background:rgba(2,5,9,.92);backdrop-filter:blur(14px);border-bottom:1px solid rgba(0,200,255,.07);padding:12px 24px}
+#search-inner{max-width:1320px;margin:0 auto;display:flex;align-items:center;gap:12px}
+#search-box{flex:1;background:rgba(255,255,255,.04);border:1px solid rgba(0,200,255,.15);border-radius:10px;padding:9px 16px 9px 38px;font-family:var(--f-mono);font-size:12px;color:var(--tb);outline:none;transition:border-color .2s}
+#search-box::placeholder{color:var(--td)}
+#search-box:focus{border-color:rgba(0,200,255,.4);background:rgba(255,255,255,.06)}
+.search-icon{position:absolute;left:16px;color:var(--td);font-size:13px;pointer-events:none}
+.search-wrap-inner{position:relative;flex:1;display:flex;align-items:center}
+#search-count{font-family:var(--f-mono);font-size:10px;color:var(--td);white-space:nowrap}
+.dcard.hidden{display:none}
+/* enhanced topic item with hover link area */
+.ti{background:rgba(255,255,255,.022);border:1px solid rgba(255,255,255,.05);border-radius:9px;padding:10px 12px;cursor:default;position:relative;transition:all .16s}
+.ti:hover{border-color:var(--mc,#00d4ff);background:rgba(255,255,255,.04)}
+/* resource section header */
+.res-hdr{font-family:var(--f-mono);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--td);margin:10px 0 6px;opacity:.6}
+/* phase filter pills */
+#filter-wrap{max-width:1320px;margin:0 auto 0;padding:16px 20px 0;display:flex;gap:8px;flex-wrap:wrap}
+.f-pill{font-family:var(--f-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.1);color:var(--td);cursor:pointer;transition:all .18s;background:transparent}
+.f-pill:hover,.f-pill.active{background:rgba(0,200,255,.1);border-color:rgba(0,200,255,.4);color:var(--tb)}
+/* floating resource panel */
+.ti-res-btn{position:absolute;top:8px;right:8px;width:18px;height:18px;border-radius:50%;border:1.5px solid rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;font-size:8px;color:rgba(255,255,255,.4);cursor:pointer;transition:all .18s;background:rgba(255,255,255,.03);z-index:2}
+.ti-res-btn:hover,.ti.has-res .ti-res-btn{border-color:var(--mc,#00d4ff);color:var(--mc,#00d4ff);background:rgba(0,200,255,.06)}
+.ti.done .ti-res-btn{top:8px;right:30px}
 
 /* ── TIMELINE ── */
 #tl-sec{max-width:1320px;margin:0 auto;padding:56px 28px 80px}
@@ -173,6 +210,23 @@ footer strong{color:var(--prog)}
   <div class="scroll-cue"><span>EXPLORE</span><div class="caret"></div></div>
 </section>
 
+<div id="search-wrap">
+  <div id="search-inner">
+    <div class="search-wrap-inner">
+      <span class="search-icon">🔍</span>
+      <input id="search-box" type="text" placeholder="Search topics, domains, tools… (e.g. 'transformer', 'kubernetes', 'RAG')">
+    </div>
+    <span id="search-count"></span>
+  </div>
+</div>
+<div id="filter-wrap">
+  <span class="f-pill active" data-phase="all">All Phases</span>
+  <span class="f-pill" data-phase="1">Phase 1 · Math & Prog</span>
+  <span class="f-pill" data-phase="2">Phase 2 · ML & DL</span>
+  <span class="f-pill" data-phase="3">Phase 3 · NLP · CV · RL · Data</span>
+  <span class="f-pill" data-phase="4">Phase 4 · MLOps & Cloud</span>
+  <span class="f-pill" data-phase="5">Phase 5 · GenAI & Leadership</span>
+</div>
 <div id="phases"></div>
 
 <!-- TIMELINE -->
@@ -211,6 +265,311 @@ footer strong{color:var(--prog)}
 </div>
 
 <script>
+/* ===================================================================
+   RESOURCE LINKS — maps section resource names → URLs
+=================================================================== */
+const RESOURCE_LINKS = {
+  // Math
+  '3Blue1Brown — Essence of Linear Algebra (YouTube)': 'https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab',
+  'MIT 18.06 — Gilbert Strang (free)': 'https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/',
+  'Mathematics for ML — Deisenroth (free PDF)': 'https://mml-book.github.io/',
+  'Boyd & Vandenberghe — Convex Optimization (free PDF)': 'https://web.stanford.edu/~boyd/cvxbook/',
+  '3Blue1Brown — Calculus series': 'https://www.youtube.com/playlist?list=PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr',
+  'MIT 18.01 OpenCourseWare': 'https://ocw.mit.edu/courses/18-01-single-variable-calculus-fall-2006/',
+  'Blitzstein — Introduction to Probability (Harvard, free)': 'https://projects.iq.harvard.edu/stat110/home',
+  'Think Stats — Downey (free online)': 'https://greenteapress.com/wp/think-stats-2e/',
+  'PRML — Bishop Ch.1–2': 'https://www.microsoft.com/en-us/research/uploads/prod/2006/01/Bishop-Pattern-Recognition-and-Machine-Learning-2006.pdf',
+  // Programming
+  'Fluent Python — Ramalho (essential read)': 'https://www.oreilly.com/library/view/fluent-python-2nd/9781492056348/',
+  'Effective Python — Slatkin': 'https://effectivepython.com/',
+  'Real Python (realpython.com)': 'https://realpython.com/',
+  'Python for Data Analysis — McKinney': 'https://wesmckinney.com/book/',
+  'NumPy docs — read every section': 'https://numpy.org/doc/stable/',
+  'LeetCode — 200 problems minimum (Blind 75 + NeetCode 150)': 'https://leetcode.com/',
+  'CLRS — Introduction to Algorithms': 'https://mitpress.mit.edu/9780262046305/introduction-to-algorithms/',
+  'NeetCode.io roadmap': 'https://neetcode.io/',
+  'FastAPI official docs': 'https://fastapi.tiangolo.com/',
+  'Docker Deep Dive — Poulton': 'https://www.docker.com/resources/what-container/',
+  'Use the Index, Luke (SQL tuning)': 'https://use-the-index-luke.com/',
+  // Classical ML
+  'Hands-On ML — Géron 3rd ed': 'https://github.com/ageron/handson-ml3',
+  'Elements of Statistical Learning (free PDF)': 'https://hastie.su.domains/ElemStatLearn/',
+  'scikit-learn user guide': 'https://scikit-learn.org/stable/user_guide.html',
+  'Pattern Recognition & ML — Bishop (PRML)': 'https://www.microsoft.com/en-us/research/uploads/prod/2006/01/Bishop-Pattern-Recognition-and-Machine-Learning-2006.pdf',
+  'UMAP paper + Leland McInnes talks': 'https://arxiv.org/abs/1802.03426',
+  'Optuna documentation': 'https://optuna.readthedocs.io/',
+  'ML Mastery — Jason Brownlee (practical guides)': 'https://machinelearningmastery.com/',
+  'Feature Engineering for ML — Zheng & Casari': 'https://www.oreilly.com/library/view/feature-engineering-for/9781491953235/',
+  'featuretools documentation': 'https://featuretools.alteryx.com/',
+  // Deep Learning
+  'Deep Learning — Goodfellow et al. (free online)': 'https://www.deeplearningbook.org/',
+  'Andrej Karpathy: Zero to Hero series (YouTube)': 'https://www.youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ',
+  'CS231n Stanford lecture notes': 'https://cs231n.github.io/',
+  'PyTorch official tutorials': 'https://pytorch.org/tutorials/',
+  'Effective PyTorch (GitHub)': 'https://github.com/vahidk/EffectivePyTorch',
+  'fast.ai Practical Deep Learning': 'https://course.fast.ai/',
+  'timm library — read the source code': 'https://github.com/huggingface/pytorch-image-models',
+  'Papers With Code SOTA tracker (CV)': 'https://paperswithcode.com/sota',
+  'Attention Is All You Need — Vaswani et al.': 'https://arxiv.org/abs/1706.03762',
+  'The Illustrated Transformer — Jay Alammar': 'https://jalammar.github.io/illustrated-transformer/',
+  'nanoGPT — Andrej Karpathy (GitHub)': 'https://github.com/karpathy/nanoGPT',
+  'Chinchilla paper (2022)': 'https://arxiv.org/abs/2203.15556',
+  'The Scheduler Deep-Dive — Sebastian Raschka': 'https://magazine.sebastianraschka.com/',
+  // NLP
+  'Speech & Language Processing — Jurafsky & Martin (free draft)': 'https://web.stanford.edu/~jurafsky/slp3/',
+  'spaCy advanced course (free)': 'https://course.spacy.io/',
+  'Hugging Face NLP course (free)': 'https://huggingface.co/learn/nlp-course',
+  'LLM course — Sebastian Raschka (GitHub)': 'https://github.com/rasbt/LLMs-from-scratch',
+  'InstructGPT & DPO papers': 'https://arxiv.org/abs/2203.02155',
+  'LangChain docs': 'https://python.langchain.com/docs/',
+  'LlamaIndex docs': 'https://docs.llamaindex.ai/',
+  'RAGAS paper & library (GitHub)': 'https://github.com/explodinggradients/ragas',
+  'vLLM documentation': 'https://docs.vllm.ai/',
+  'TGI docs & blog': 'https://huggingface.co/docs/text-generation-inference',
+  'Efficient LLM Serving survey papers': 'https://arxiv.org/abs/2312.15234',
+  // CV
+  'CS231n Stanford — all lecture notes': 'https://cs231n.github.io/',
+  'PyImageSearch blog': 'https://pyimagesearch.com/',
+  'timm library — read the source': 'https://github.com/huggingface/pytorch-image-models',
+  'Papers With Code CV SOTA': 'https://paperswithcode.com/sota/image-classification-on-imagenet',
+  'MMDetection (OpenMMLab)': 'https://github.com/open-mmlab/mmdetection',
+  'Detectron2 docs': 'https://detectron2.readthedocs.io/',
+  'SAM paper & interactive demo': 'https://segment-anything.com/',
+  'Annotated Diffusion — HuggingFace blog': 'https://huggingface.co/blog/annotated-diffusion',
+  'HuggingFace Diffusers library': 'https://huggingface.co/docs/diffusers/',
+  // RL
+  'Sutton & Barto — Reinforcement Learning 2nd ed (free online)': 'http://incompleteideas.net/book/the-book-2nd.html',
+  'David Silver RL Course — DeepMind (YouTube)': 'https://www.youtube.com/playlist?list=PLqYmG7hTraZDM-OYHWgPebj2MfCFzFObQ',
+  'Spinning Up in Deep RL — OpenAI (free)': 'https://spinningup.openai.com/',
+  'CleanRL — single-file implementations (GitHub)': 'https://github.com/vwxyzjn/cleanrl',
+  'InstructGPT paper (Ouyang et al.)': 'https://arxiv.org/abs/2203.02155',
+  'DPO paper (Rafailov et al.)': 'https://arxiv.org/abs/2305.18290',
+  'DeepSeek-R1 paper': 'https://arxiv.org/abs/2501.12948',
+  'Constitutional AI — Anthropic': 'https://arxiv.org/abs/2212.08073',
+  // Data Engineering
+  'Learning Spark — O\'Reilly (free)': 'https://pages.databricks.com/rs/094-YMS-629/images/LearningSpark2.0.pdf',
+  'Kafka: The Definitive Guide (free PDF)': 'https://www.confluent.io/resources/kafka-the-definitive-guide/',
+  'Flink documentation': 'https://flink.apache.org/docs/',
+  'Fundamentals of Data Engineering — Reis & Housley': 'https://www.oreilly.com/library/view/fundamentals-of-data/9781098108298/',
+  'Delta Lake docs': 'https://docs.delta.io/',
+  'Feast documentation': 'https://docs.feast.dev/',
+  'Airflow documentation': 'https://airflow.apache.org/docs/',
+  'dbt Learn (free courses)': 'https://learn.getdbt.com/',
+  'Great Expectations docs': 'https://docs.greatexpectations.io/',
+  // MLOps
+  'MLflow documentation': 'https://mlflow.org/docs/latest/',
+  'W&B free ML courses': 'https://www.wandb.courses/',
+  'DVC Get Started guide': 'https://dvc.org/doc/start',
+  'Practical MLOps — Gift & Deza': 'https://www.oreilly.com/library/view/practical-mlops/9781098103002/',
+  'Full Stack Deep Learning — llm.wtf (free)': 'https://fullstackdeeplearning.com/',
+  'Triton Inference Server docs': 'https://docs.nvidia.com/deeplearning/triton-inference-server/',
+  'BentoML docs': 'https://docs.bentoml.com/',
+  'Chip Huyen: Designing ML Systems': 'https://www.oreilly.com/library/view/designing-machine-learning/9781098107956/',
+  'Evidently AI docs': 'https://docs.evidentlyai.com/',
+  'Designing ML Systems — Chip Huyen (essential)': 'https://www.oreilly.com/library/view/designing-machine-learning/9781098107956/',
+  // AWS
+  'AWS ML Specialty certification guide': 'https://aws.amazon.com/certification/certified-machine-learning-specialty/',
+  'AWS Skill Builder (free training)': 'https://skillbuilder.aws/',
+  'AWS Architecture Center': 'https://aws.amazon.com/architecture/',
+  'SageMaker Immersion Day (free workshop)': 'https://catalog.us-east-1.prod.workshops.aws/workshops/63069e26-921c-4ce1-9cc7-daf6b5f99a40/en-US',
+  'AWS ML Blog': 'https://aws.amazon.com/blogs/machine-learning/',
+  'SageMaker Examples GitHub': 'https://github.com/aws/amazon-sagemaker-examples',
+  'AWS Bedrock Workshop (free)': 'https://catalog.us-east-1.prod.workshops.aws/workshops/a4bdb007-5600-4368-81c5-ff5b4154f518/en-US',
+  'Amazon Science Blog': 'https://www.amazon.science/',
+  'Bedrock API documentation': 'https://docs.aws.amazon.com/bedrock/',
+  'EKS Best Practices Guide (free, GitHub)': 'https://aws.github.io/aws-eks-best-practices/',
+  'Karpenter docs': 'https://karpenter.sh/docs/',
+  'NVIDIA GPU Operator docs': 'https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/',
+  // GCP
+  'Google Cloud Skills Boost (free credits)': 'https://cloudskillsboost.google/',
+  'GCP Architecture Center': 'https://cloud.google.com/architecture',
+  'Google Cloud Blog': 'https://cloud.google.com/blog',
+  'Vertex AI Codelabs (free)': 'https://codelabs.developers.google.com/?cat=Cloud',
+  'ML on GCP Specialization — Coursera': 'https://www.coursera.org/specializations/machine-learning-tensorflow-gcp',
+  'Vertex AI documentation': 'https://cloud.google.com/vertex-ai/docs',
+  'Google AI for Developers (ai.google.dev)': 'https://ai.google.dev/',
+  'Gemini API docs': 'https://ai.google.dev/gemini-api/docs',
+  'Model Garden console': 'https://cloud.google.com/model-garden',
+  'BigQuery documentation': 'https://cloud.google.com/bigquery/docs',
+  'JAX documentation (jax.readthedocs.io)': 'https://jax.readthedocs.io/',
+  'TPU Quickstart Guide': 'https://cloud.google.com/tpu/docs/quick-starts',
+  // Systems Design
+  'Designing Data-Intensive Applications — Kleppmann (DDIA, essential)': 'https://dataintensive.net/',
+  'Martin Fowler microservices patterns': 'https://martinfowler.com/microservices/',
+  'ML System Design Interview — Alex Xu Vol.2': 'https://www.amazon.com/Machine-Learning-Design-Interview-System/dp/B09YQWX59Z',
+  'Designing ML Systems — Chip Huyen': 'https://www.oreilly.com/library/view/designing-machine-learning/9781098107956/',
+  'Kubernetes in Action — Lukša': 'https://www.manning.com/books/kubernetes-in-action',
+  'k8s The Hard Way — Kelsey Hightower': 'https://github.com/kelseyhightower/kubernetes-the-hard-way',
+  // GenAI
+  'Megatron-LM paper': 'https://arxiv.org/abs/1909.08053',
+  'ZeRO paper (DeepSpeed)': 'https://arxiv.org/abs/1910.02054',
+  'Chinchilla (Hoffmann et al.)': 'https://arxiv.org/abs/2203.15556',
+  'LLM360 papers': 'https://arxiv.org/abs/2312.06550',
+  'LLaVA paper': 'https://arxiv.org/abs/2304.08485',
+  'Whisper paper (Radford et al.)': 'https://arxiv.org/abs/2212.04356',
+  'ColPali paper': 'https://arxiv.org/abs/2407.01449',
+  'LangGraph documentation': 'https://langchain-ai.github.io/langgraph/',
+  'AutoGen paper (Microsoft)': 'https://arxiv.org/abs/2308.08155',
+  'SWE-agent paper': 'https://arxiv.org/abs/2405.15793',
+  'AgentBench benchmark': 'https://arxiv.org/abs/2308.03688',
+  'DiT paper (Peebles & Xie)': 'https://arxiv.org/abs/2212.09748',
+  'Flow Matching paper': 'https://arxiv.org/abs/2210.02747',
+  'Consistency Models paper': 'https://arxiv.org/abs/2303.01469',
+  // Leadership
+  'Staff Engineer — Will Larson': 'https://staffeng.com/book',
+  'The Staff Engineer\'s Path — Tanya Reilly': 'https://www.oreilly.com/library/view/the-staff-engineers/9781098118723/',
+  'An Elegant Puzzle — Will Larson': 'https://press.stripe.com/an-elegant-puzzle',
+  'How to Read a Paper — S. Keshav': 'https://web.stanford.edu/class/ee384m/Handouts/HowtoReadPaper.pdf',
+  'Papers With Code': 'https://paperswithcode.com/',
+  'arxiv.org daily reading habit': 'https://arxiv.org/list/cs.LG/recent',
+  'Radical Candor — Kim Scott': 'https://www.radicalcandor.com/the-book/',
+  'High Output Management — Andy Grove': 'https://www.amazon.com/High-Output-Management-Andrew-Grove/dp/0679762884',
+  'Thinking in Systems — Meadows': 'https://www.chelseagreen.com/product/thinking-in-systems/',
+};
+
+/* ===================================================================
+   TOPIC LINKS — per-topic resource links
+=================================================================== */
+const TOPIC_LINKS = {
+  // Linear Algebra
+  'Vectors & Vector Spaces': [{type:'yt',url:'https://www.youtube.com/watch?v=fNk_zzaMoSs',label:'3B1B: Vectors'},{type:'doc',url:'https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/',label:'MIT 18.06'}],
+  'Matrix Operations': [{type:'yt',url:'https://www.youtube.com/watch?v=XkY2DOUCWMU',label:'3B1B: Linear transforms'},{type:'doc',url:'https://numpy.org/doc/stable/reference/routines.linalg.html',label:'NumPy linalg'}],
+  'Eigenvalues & Eigenvectors': [{type:'yt',url:'https://www.youtube.com/watch?v=PFDu9oVAE-g',label:'3B1B: Eigenvectors'},{type:'paper',url:'https://mml-book.github.io/',label:'MML Book Ch.4'}],
+  'SVD (Singular Value Decomp)': [{type:'yt',url:'https://www.youtube.com/watch?v=mBcLRGuAFUk',label:'Steve Brunton: SVD'},{type:'doc',url:'https://numpy.org/doc/stable/reference/generated/numpy.linalg.svd.html',label:'NumPy SVD docs'}],
+  'Norms & Distance Metrics': [{type:'doc',url:'https://mml-book.github.io/',label:'MML Book Ch.3'},{type:'doc',url:'https://scikit-learn.org/stable/modules/metrics.html',label:'sklearn metrics'}],
+  'Matrix Factorizations': [{type:'yt',url:'https://www.youtube.com/watch?v=J-mvQBIBNE0',label:'MIT 18.06: Factorizations'},{type:'doc',url:'https://scipy.org/doc/scipy/reference/linalg.html',label:'SciPy linalg'}],
+  // Calculus
+  'Multivariable Derivatives': [{type:'yt',url:'https://www.youtube.com/watch?v=TrcCbdWwCBc',label:'3B1B: Partial deriv'},{type:'doc',url:'https://ocw.mit.edu/courses/18-02sc-multivariable-calculus-fall-2010/',label:'MIT 18.02'}],
+  'Chain Rule (THE backprop rule)': [{type:'yt',url:'https://www.youtube.com/watch?v=tIeHLnjs5U8',label:'3B1B: Backprop'},{type:'yt',url:'https://www.youtube.com/watch?v=VMj-3S1tku0',label:'Karpathy: micrograd'}],
+  'Gradient Descent Family': [{type:'yt',url:'https://www.youtube.com/watch?v=sDv4f4s2SB8',label:'Gradient descent viz'},{type:'paper',url:'https://arxiv.org/abs/1412.6980',label:'Adam paper'}],
+  'Convex Optimization': [{type:'doc',url:'https://web.stanford.edu/~boyd/cvxbook/',label:'Boyd CVX book (free)'},{type:'yt',url:'https://www.youtube.com/playlist?list=PL3940DD956CDF0622',label:'Stanford CVX lectures'}],
+  // Probability
+  'Probability Foundations': [{type:'yt',url:'https://www.youtube.com/playlist?list=PL2SOU6wwxB0uwwH80KTQ6ht66KWxbzTIo',label:'Harvard Stat110'},{type:'book',url:'https://greenteapress.com/wp/think-stats-2e/',label:'Think Stats (free)'}],
+  'MLE & MAP Estimation': [{type:'yt',url:'https://www.youtube.com/watch?v=aHwsEXCnRPE',label:'MLE explained'},{type:'paper',url:'https://www.microsoft.com/en-us/research/uploads/prod/2006/01/Bishop-Pattern-Recognition-and-Machine-Learning-2006.pdf',label:'PRML Ch.1'}],
+  'Information Theory': [{type:'yt',url:'https://www.youtube.com/watch?v=ErfnhcEV1O8',label:'Shannon entropy'},{type:'paper',url:'https://arxiv.org/abs/2206.14100',label:'Info theory for ML'}],
+  // Python
+  'CPython Internals & GIL': [{type:'yt',url:'https://www.youtube.com/watch?v=7RlqbHCCVyc',label:'GIL explained'},{type:'doc',url:'https://realpython.com/python-gil/',label:'Real Python: GIL'}],
+  'Functional Patterns': [{type:'doc',url:'https://docs.python.org/3/library/itertools.html',label:'itertools docs'},{type:'doc',url:'https://realpython.com/python-decorators/',label:'Decorators guide'}],
+  'Concurrency Models': [{type:'yt',url:'https://www.youtube.com/watch?v=9zinZmE3Ogk',label:'AsyncIO explained'},{type:'doc',url:'https://realpython.com/async-io-python/',label:'Real Python: asyncio'}],
+  'Performance & Profiling': [{type:'doc',url:'https://docs.python.org/3/library/profile.html',label:'cProfile docs'},{type:'yt',url:'https://www.youtube.com/watch?v=8qEnExGLZfY',label:'Profiling Python'}],
+  // NumPy / Pandas
+  'NumPy — Deep Vectorization': [{type:'doc',url:'https://numpy.org/doc/stable/user/basics.broadcasting.html',label:'Broadcasting guide'},{type:'yt',url:'https://www.youtube.com/watch?v=QUT1VHiLmmI',label:'NumPy tutorial'}],
+  'Pandas — At Scale': [{type:'doc',url:'https://pandas.pydata.org/docs/',label:'Pandas docs'},{type:'yt',url:'https://www.youtube.com/watch?v=2uvysYbKdjM',label:'Pandas optimization'}],
+  // Algorithms
+  'Dynamic Programming': [{type:'doc',url:'https://leetcode.com/tag/dynamic-programming/',label:'LeetCode DP problems'},{type:'yt',url:'https://www.youtube.com/watch?v=oBt53YbR9Kk',label:'DP for beginners'}],
+  'Graph Algorithms': [{type:'doc',url:'https://neetcode.io/',label:'NeetCode graphs'},{type:'yt',url:'https://www.youtube.com/watch?v=tWVWeAqZ0WU',label:'Graph traversal'}],
+  'Complexity Analysis': [{type:'yt',url:'https://www.youtube.com/watch?v=Mo4vesaut8g',label:'Big-O notation'},{type:'doc',url:'https://www.bigocheatsheet.com/',label:'Big-O cheat sheet'}],
+  // ML Algorithms
+  'Linear & Logistic Regression': [{type:'yt',url:'https://www.youtube.com/watch?v=nk2CQITm_eo',label:'StatQuest: Logistic Reg'},{type:'doc',url:'https://scikit-learn.org/stable/modules/linear_model.html',label:'sklearn linear'}],
+  'Decision Trees (CART)': [{type:'yt',url:'https://www.youtube.com/watch?v=7VeUPuFGJHk',label:'StatQuest: Decision Trees'},{type:'doc',url:'https://scikit-learn.org/stable/modules/tree.html',label:'sklearn trees'}],
+  'Random Forests': [{type:'yt',url:'https://www.youtube.com/watch?v=J4Wdy0Wc_xQ',label:'StatQuest: Random Forest'},{type:'doc',url:'https://scikit-learn.org/stable/modules/ensemble.html',label:'sklearn ensemble'}],
+  'Gradient Boosting (XGBoost/LGB)': [{type:'yt',url:'https://www.youtube.com/watch?v=OtD8wVaFm6E',label:'StatQuest: XGBoost'},{type:'doc',url:'https://xgboost.readthedocs.io/',label:'XGBoost docs'},{type:'doc',url:'https://lightgbm.readthedocs.io/',label:'LightGBM docs'}],
+  'Support Vector Machines': [{type:'yt',url:'https://www.youtube.com/watch?v=efR1C6CvhmE',label:'StatQuest: SVM'},{type:'paper',url:'https://cs229.stanford.edu/notes2022fall/cs229-notes3.pdf',label:'CS229 SVM notes'}],
+  'PCA from Scratch': [{type:'yt',url:'https://www.youtube.com/watch?v=FgakZw6K1QQ',label:'StatQuest: PCA'},{type:'doc',url:'https://scikit-learn.org/stable/modules/decomposition.html',label:'sklearn PCA'}],
+  't-SNE & UMAP': [{type:'yt',url:'https://www.youtube.com/watch?v=NEaUSP4YerM',label:'StatQuest: t-SNE'},{type:'doc',url:'https://umap-learn.readthedocs.io/',label:'UMAP docs'}],
+  'Cross-Validation Strategies': [{type:'yt',url:'https://www.youtube.com/watch?v=fSytzGwwBVw',label:'StatQuest: Cross-val'},{type:'doc',url:'https://scikit-learn.org/stable/modules/cross_validation.html',label:'sklearn CV'}],
+  'Hyperparameter Optimization': [{type:'doc',url:'https://optuna.readthedocs.io/',label:'Optuna docs'},{type:'yt',url:'https://www.youtube.com/watch?v=P6NwZVl8ttc',label:'Bayesian HPO'}],
+  // Deep Learning
+  'Backpropagation from Scratch': [{type:'yt',url:'https://www.youtube.com/watch?v=VMj-3S1tku0',label:'Karpathy: micrograd'},{type:'yt',url:'https://www.youtube.com/watch?v=tIeHLnjs5U8',label:'3B1B: Backprop'}],
+  'Forward Pass & Loss Functions': [{type:'yt',url:'https://www.youtube.com/watch?v=aircAruvnKk',label:'3B1B: Neural nets'},{type:'doc',url:'https://pytorch.org/docs/stable/nn.html',label:'PyTorch nn module'}],
+  'Weight Initialization': [{type:'paper',url:'https://arxiv.org/abs/1502.01852',label:'Kaiming He paper'},{type:'doc',url:'https://pytorch.org/docs/stable/nn.init.html',label:'PyTorch init docs'}],
+  'Normalization Layers': [{type:'paper',url:'https://arxiv.org/abs/1502.03167',label:'BatchNorm paper'},{type:'paper',url:'https://arxiv.org/abs/1607.06450',label:'LayerNorm paper'}],
+  'Autograd & Computation Graphs': [{type:'yt',url:'https://www.youtube.com/watch?v=MswxJw-8PvE',label:'PyTorch Autograd'},{type:'doc',url:'https://pytorch.org/tutorials/beginner/blitz/autograd_tutorial.html',label:'Autograd tutorial'}],
+  'Training Loop Best Practices': [{type:'doc',url:'https://pytorch.org/tutorials/beginner/introyt/trainingyt.html',label:'PyTorch training'},{type:'yt',url:'https://www.youtube.com/watch?v=Nutpusq_AFw',label:'AMP mixed precision'}],
+  'Distributed Training': [{type:'doc',url:'https://pytorch.org/tutorials/intermediate/ddp_tutorial.html',label:'DDP tutorial'},{type:'doc',url:'https://huggingface.co/docs/accelerate/',label:'HF Accelerate docs'}],
+  // Attention & Transformers
+  'Attention from Scratch': [{type:'yt',url:'https://www.youtube.com/watch?v=eMlx5fFNoYc',label:'Andrej: attention'},{type:'paper',url:'https://arxiv.org/abs/1706.03762',label:'Attention Is All You Need'}],
+  'Full Transformer Architecture': [{type:'yt',url:'https://www.youtube.com/watch?v=kCc8FmEb1nY',label:'Karpathy: GPT from scratch'},{type:'doc',url:'https://jalammar.github.io/illustrated-transformer/',label:'Illustrated Transformer'}],
+  'BERT vs GPT Objectives': [{type:'paper',url:'https://arxiv.org/abs/1810.04805',label:'BERT paper'},{type:'yt',url:'https://www.youtube.com/watch?v=xI0HHN5XKDo',label:'BERT explained'}],
+  'Efficient Attention Methods': [{type:'paper',url:'https://arxiv.org/abs/2205.14135',label:'Flash Attention paper'},{type:'paper',url:'https://arxiv.org/abs/2307.08691',label:'Flash Attention 2'}],
+  'Mamba & State Space Models': [{type:'paper',url:'https://arxiv.org/abs/2312.00752',label:'Mamba paper'},{type:'yt',url:'https://www.youtube.com/watch?v=8Q_tqwpTpVU',label:'Mamba explained'}],
+  // Convolutions
+  'Convolution Math': [{type:'yt',url:'https://www.youtube.com/watch?v=HGwBXDKFk9I',label:'Conv math visual'},{type:'doc',url:'https://cs231n.github.io/convolutional-networks/',label:'CS231n Conv notes'}],
+  'Architecture Evolution': [{type:'yt',url:'https://www.youtube.com/watch?v=dZVkygnKh1M',label:'CNN history'},{type:'paper',url:'https://arxiv.org/abs/1512.03385',label:'ResNet paper'}],
+  'Transfer Learning': [{type:'yt',url:'https://www.youtube.com/watch?v=5T-iXNNiwIs',label:'Transfer learning guide'},{type:'doc',url:'https://pytorch.org/tutorials/beginner/transfer_learning_tutorial.html',label:'PyTorch TL tutorial'}],
+  // NLP
+  'Tokenization Algorithms': [{type:'yt',url:'https://www.youtube.com/watch?v=zduSFxRajkE',label:'Karpathy: tokenization'},{type:'doc',url:'https://huggingface.co/docs/tokenizers/',label:'HF Tokenizers docs'}],
+  'Pretraining at Scale': [{type:'paper',url:'https://arxiv.org/abs/2203.15556',label:'Chinchilla paper'},{type:'yt',url:'https://www.youtube.com/watch?v=kDiHD9vcKsk',label:'Pretraining LLMs talk'}],
+  'Instruction Fine-Tuning (SFT)': [{type:'paper',url:'https://arxiv.org/abs/2109.01652',label:'FLAN paper'},{type:'doc',url:'https://huggingface.co/docs/trl/sft_trainer',label:'HF TRL SFTTrainer'}],
+  'RLHF Full Pipeline': [{type:'paper',url:'https://arxiv.org/abs/2203.02155',label:'InstructGPT paper'},{type:'yt',url:'https://www.youtube.com/watch?v=hhiLw5Q_UFg',label:'RLHF explained'}],
+  'LoRA & PEFT Methods': [{type:'paper',url:'https://arxiv.org/abs/2106.09685',label:'LoRA paper'},{type:'doc',url:'https://huggingface.co/docs/peft/',label:'HF PEFT docs'},{type:'paper',url:'https://arxiv.org/abs/2305.14314',label:'QLoRA paper'}],
+  'DPO & Alignment Methods': [{type:'paper',url:'https://arxiv.org/abs/2305.18290',label:'DPO paper'},{type:'doc',url:'https://huggingface.co/docs/trl/dpo_trainer',label:'HF TRL DPO'}],
+  'Prompt Engineering (Advanced)': [{type:'paper',url:'https://arxiv.org/abs/2201.11903',label:'Chain-of-Thought paper'},{type:'doc',url:'https://www.promptingguide.ai/',label:'Prompting Guide'}],
+  'LLM Evaluation': [{type:'doc',url:'https://github.com/EleutherAI/lm-evaluation-harness',label:'LM Eval Harness'},{type:'doc',url:'https://lmsys.org/projects/',label:'LMSYS Chatbot Arena'}],
+  // RAG
+  'Vector Databases': [{type:'doc',url:'https://qdrant.tech/documentation/',label:'Qdrant docs'},{type:'doc',url:'https://weaviate.io/developers/weaviate',label:'Weaviate docs'},{type:'doc',url:'https://docs.pinecone.io/',label:'Pinecone docs'}],
+  'Embedding Models': [{type:'doc',url:'https://huggingface.co/BAAI/bge-large-en-v1.5',label:'BGE embeddings'},{type:'paper',url:'https://arxiv.org/abs/2205.09375',label:'Sentence-BERT paper'}],
+  'Hybrid Search': [{type:'paper',url:'https://arxiv.org/abs/2009.10790',label:'ColBERT paper'},{type:'doc',url:'https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html',label:'Elasticsearch docs'}],
+  'RAG Evaluation (RAGAS)': [{type:'doc',url:'https://docs.ragas.io/',label:'RAGAS docs'},{type:'paper',url:'https://arxiv.org/abs/2309.15217',label:'RAGAS paper'}],
+  'Advanced RAG Patterns': [{type:'paper',url:'https://arxiv.org/abs/2312.10997',label:'RAG survey paper'},{type:'doc',url:'https://docs.llamaindex.ai/en/latest/optimizing/advanced_retrieval/',label:'LlamaIndex advanced RAG'}],
+  // LLM Inference
+  'KV Cache & PagedAttention': [{type:'paper',url:'https://arxiv.org/abs/2309.06180',label:'vLLM PagedAttention'},{type:'doc',url:'https://docs.vllm.ai/en/latest/',label:'vLLM docs'}],
+  'Quantization (GPTQ/AWQ/GGUF)': [{type:'paper',url:'https://arxiv.org/abs/2210.17323',label:'GPTQ paper'},{type:'doc',url:'https://huggingface.co/docs/transformers/quantization',label:'HF quantization guide'}],
+  'Speculative Decoding': [{type:'paper',url:'https://arxiv.org/abs/2302.01318',label:'Speculative decoding paper'},{type:'yt',url:'https://www.youtube.com/watch?v=EhKoyo1Dh3I',label:'Speculative decoding explained'}],
+  'Serving Frameworks': [{type:'doc',url:'https://docs.vllm.ai/',label:'vLLM'},{type:'doc',url:'https://huggingface.co/docs/text-generation-inference',label:'TGI'},{type:'doc',url:'https://github.com/ggerganov/llama.cpp',label:'llama.cpp'}],
+  // CV
+  'CLIP & Multimodal Alignment': [{type:'paper',url:'https://arxiv.org/abs/2103.00020',label:'CLIP paper'},{type:'doc',url:'https://github.com/mlfoundations/open_clip',label:'OpenCLIP GitHub'}],
+  'Self-Supervised Vision': [{type:'paper',url:'https://arxiv.org/abs/2104.14294',label:'DINO paper'},{type:'paper',url:'https://arxiv.org/abs/2111.06377',label:'MAE paper'}],
+  'YOLO Series (v5–v10)': [{type:'doc',url:'https://docs.ultralytics.com/',label:'Ultralytics docs'},{type:'yt',url:'https://www.youtube.com/watch?v=ag3DLKsl2vk',label:'YOLOv8 tutorial'}],
+  'Segment Anything (SAM/SAM2)': [{type:'paper',url:'https://arxiv.org/abs/2304.02643',label:'SAM paper'},{type:'doc',url:'https://segment-anything.com/',label:'Interactive demo'}],
+  'Diffusion Models from Scratch': [{type:'paper',url:'https://arxiv.org/abs/2006.11239',label:'DDPM paper'},{type:'yt',url:'https://www.youtube.com/watch?v=W-O7AZNzbzQ',label:'Diffusion models explained'},{type:'doc',url:'https://huggingface.co/blog/annotated-diffusion',label:'HF annotated diffusion'}],
+  'Stable Diffusion Architecture': [{type:'paper',url:'https://arxiv.org/abs/2112.10752',label:'LDM paper'},{type:'doc',url:'https://huggingface.co/docs/diffusers/en/using-diffusers/write_own_pipeline',label:'Diffusers pipeline guide'}],
+  // RL
+  'MDP Framework': [{type:'book',url:'http://incompleteideas.net/book/the-book-2nd.html',label:'Sutton & Barto Ch.1'},{type:'yt',url:'https://www.youtube.com/watch?v=2GwBez0D20A',label:'RL intro lecture'}],
+  'PPO in Depth': [{type:'paper',url:'https://arxiv.org/abs/1707.06347',label:'PPO paper'},{type:'doc',url:'https://github.com/vwxyzjn/cleanrl',label:'CleanRL PPO implementation'}],
+  'DQN & Variants': [{type:'paper',url:'https://arxiv.org/abs/1312.5602',label:'DQN paper (DeepMind)'},{type:'doc',url:'https://spinningup.openai.com/en/latest/algorithms/dqn.html',label:'Spinning Up DQN'}],
+  'RLHF Complete Pipeline': [{type:'paper',url:'https://arxiv.org/abs/2203.02155',label:'InstructGPT'},{type:'yt',url:'https://www.youtube.com/watch?v=hhiLw5Q_UFg',label:'RLHF walkthrough'}],
+  'Reward Model Training': [{type:'paper',url:'https://arxiv.org/abs/2203.02155',label:'InstructGPT RM section'},{type:'doc',url:'https://huggingface.co/docs/trl/reward_trainer',label:'TRL RewardTrainer'}],
+  'DPO Closed-Form': [{type:'paper',url:'https://arxiv.org/abs/2305.18290',label:'DPO paper'},{type:'yt',url:'https://www.youtube.com/watch?v=XZLc09hkMwA',label:'DPO explained'}],
+  'Process Reward Models': [{type:'paper',url:'https://arxiv.org/abs/2501.12948',label:'DeepSeek-R1'},{type:'paper',url:'https://arxiv.org/abs/2305.20050',label:'Process Reward Models'}],
+  // Data Engineering
+  'Apache Spark (PySpark)': [{type:'doc',url:'https://spark.apache.org/docs/latest/',label:'Spark docs'},{type:'yt',url:'https://www.youtube.com/watch?v=GFC2gOL1p9k',label:'PySpark tutorial'}],
+  'Apache Kafka': [{type:'doc',url:'https://kafka.apache.org/documentation/',label:'Kafka docs'},{type:'yt',url:'https://www.youtube.com/watch?v=B5j3uNBH8X4',label:'Kafka in 100s'}],
+  'Apache Airflow': [{type:'doc',url:'https://airflow.apache.org/docs/',label:'Airflow docs'},{type:'yt',url:'https://www.youtube.com/watch?v=AHMm1wfGuHE',label:'Airflow tutorial'}],
+  'dbt (Data Build Tool)': [{type:'doc',url:'https://docs.getdbt.com/',label:'dbt docs'},{type:'doc',url:'https://learn.getdbt.com/',label:'dbt Learn (free)'}],
+  'Delta Lake & Iceberg': [{type:'doc',url:'https://docs.delta.io/',label:'Delta Lake docs'},{type:'doc',url:'https://iceberg.apache.org/docs/latest/',label:'Apache Iceberg docs'}],
+  'Feature Stores': [{type:'doc',url:'https://docs.feast.dev/',label:'Feast docs'},{type:'doc',url:'https://www.tecton.ai/blog/',label:'Tecton blog'}],
+  // MLOps
+  'MLflow Full Platform': [{type:'doc',url:'https://mlflow.org/docs/latest/index.html',label:'MLflow docs'},{type:'yt',url:'https://www.youtube.com/watch?v=1ykg4YmbFVA',label:'MLflow tutorial'}],
+  'Weights & Biases': [{type:'doc',url:'https://docs.wandb.ai/',label:'W&B docs'},{type:'doc',url:'https://www.wandb.courses/',label:'W&B free courses'}],
+  'DVC (Data Version Control)': [{type:'doc',url:'https://dvc.org/doc',label:'DVC docs'},{type:'yt',url:'https://www.youtube.com/watch?v=kLKBcPonMYw',label:'DVC tutorial'}],
+  'ONNX & Cross-Framework': [{type:'doc',url:'https://onnxruntime.ai/docs/',label:'ONNX Runtime docs'},{type:'doc',url:'https://onnx.ai/',label:'ONNX.ai'}],
+  'NVIDIA Triton Server': [{type:'doc',url:'https://docs.nvidia.com/deeplearning/triton-inference-server/user-guide/docs/',label:'Triton docs'},{type:'yt',url:'https://www.youtube.com/watch?v=NQDtfSi5QF4',label:'Triton tutorial'}],
+  'Data & Prediction Drift': [{type:'doc',url:'https://docs.evidentlyai.com/',label:'Evidently AI docs'},{type:'doc',url:'https://whylogs.readthedocs.io/',label:'whylogs docs'}],
+  'Kubeflow Pipelines': [{type:'doc',url:'https://www.kubeflow.org/docs/components/pipelines/',label:'KFP docs'},{type:'yt',url:'https://www.youtube.com/watch?v=PjBzX4vbR_Y',label:'Kubeflow tutorial'}],
+  // AWS
+  'S3 — ML Data Layer': [{type:'doc',url:'https://docs.aws.amazon.com/AmazonS3/latest/userguide/',label:'S3 docs'},{type:'doc',url:'https://aws.amazon.com/s3/storage-classes/',label:'Storage classes'}],
+  'SageMaker Studio': [{type:'doc',url:'https://docs.aws.amazon.com/sagemaker/latest/dg/studio.html',label:'SageMaker Studio docs'},{type:'yt',url:'https://www.youtube.com/watch?v=Cj3a9PmX8y8',label:'SageMaker Studio tour'}],
+  'Foundation Models on Bedrock': [{type:'doc',url:'https://docs.aws.amazon.com/bedrock/latest/userguide/',label:'Bedrock docs'},{type:'doc',url:'https://aws.amazon.com/bedrock/',label:'Bedrock overview'}],
+  'Bedrock Knowledge Bases': [{type:'doc',url:'https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base.html',label:'KB docs'},{type:'yt',url:'https://www.youtube.com/watch?v=UwEN9nMkAcg',label:'Bedrock RAG demo'}],
+  'Bedrock Agents': [{type:'doc',url:'https://docs.aws.amazon.com/bedrock/latest/userguide/agents.html',label:'Agents docs'},{type:'yt',url:'https://www.youtube.com/watch?v=DNDCbF9oKT8',label:'Agents walkthrough'}],
+  'EKS (Elastic k8s Service)': [{type:'doc',url:'https://docs.aws.amazon.com/eks/latest/userguide/',label:'EKS docs'},{type:'doc',url:'https://aws.github.io/aws-eks-best-practices/',label:'EKS best practices'}],
+  // GCP
+  'Gemini API on Vertex': [{type:'doc',url:'https://ai.google.dev/gemini-api/docs',label:'Gemini API docs'},{type:'doc',url:'https://cloud.google.com/vertex-ai/generative-ai/docs',label:'Vertex GenAI docs'}],
+  'BigQuery ML (BQML)': [{type:'doc',url:'https://cloud.google.com/bigquery/docs/bqml-introduction',label:'BQML docs'},{type:'yt',url:'https://www.youtube.com/watch?v=JrT71DXSSOQ',label:'BQML tutorial'}],
+  'TPU Architecture (v4/v5)': [{type:'doc',url:'https://cloud.google.com/tpu/docs/intro-to-tpu',label:'TPU intro'},{type:'doc',url:'https://jax.readthedocs.io/en/latest/',label:'JAX docs'}],
+  'Vertex AI Platform': [{type:'doc',url:'https://cloud.google.com/vertex-ai/docs',label:'Vertex docs'},{type:'doc',url:'https://codelabs.developers.google.com/?cat=Cloud',label:'Vertex codelabs'}],
+  // Systems Design
+  'CAP Theorem & Consistency': [{type:'book',url:'https://dataintensive.net/',label:'DDIA Ch.9'},{type:'yt',url:'https://www.youtube.com/watch?v=BHqjEjzAicA',label:'CAP theorem explained'}],
+  'Message Queues at Scale': [{type:'book',url:'https://dataintensive.net/',label:'DDIA Ch.11'},{type:'doc',url:'https://kafka.apache.org/documentation/',label:'Kafka docs'}],
+  'LLM Application Architecture': [{type:'doc',url:'https://python.langchain.com/docs/',label:'LangChain docs'},{type:'paper',url:'https://arxiv.org/abs/2312.10997',label:'RAG survey'}],
+  'Two-Tower Retrieval Systems': [{type:'paper',url:'https://arxiv.org/abs/2002.12674',label:'Two-tower paper'},{type:'doc',url:'https://engineering.linkedin.com/blog/2022/scaling-linkedin-feed',label:'LinkedIn feed systems'}],
+  // GenAI
+  'Scaling Laws (Chinchilla)': [{type:'paper',url:'https://arxiv.org/abs/2203.15556',label:'Chinchilla paper'},{type:'yt',url:'https://www.youtube.com/watch?v=l8pRSuU81PU',label:'Scaling laws talk'}],
+  'Mixture of Experts (MoE)': [{type:'paper',url:'https://arxiv.org/abs/2401.04088',label:'Mixtral paper'},{type:'yt',url:'https://www.youtube.com/watch?v=mwO6v4BlgZQ',label:'MoE explained'}],
+  '3D Parallelism': [{type:'paper',url:'https://arxiv.org/abs/1909.08053',label:'Megatron-LM'},{type:'doc',url:'https://huggingface.co/docs/transformers/perf_train_gpu_many',label:'HF multi-GPU guide'}],
+  'FSDP & ZeRO (DeepSpeed)': [{type:'paper',url:'https://arxiv.org/abs/1910.02054',label:'ZeRO paper'},{type:'doc',url:'https://pytorch.org/docs/stable/fsdp.html',label:'PyTorch FSDP docs'}],
+  'Vision-Language Models': [{type:'paper',url:'https://arxiv.org/abs/2304.08485',label:'LLaVA paper'},{type:'yt',url:'https://www.youtube.com/watch?v=vAmKB7iPkWw',label:'VLMs overview'}],
+  'Agent Framework Design': [{type:'doc',url:'https://langchain-ai.github.io/langgraph/',label:'LangGraph docs'},{type:'paper',url:'https://arxiv.org/abs/2308.08155',label:'AutoGen paper'}],
+  'Tool Use & Function Calling': [{type:'doc',url:'https://platform.openai.com/docs/guides/function-calling',label:'OpenAI function calling'},{type:'doc',url:'https://docs.anthropic.com/en/docs/build-with-claude/tool-use',label:'Claude tool use docs'}],
+  'Diffusion Models from Scratch (GenAI)': [{type:'paper',url:'https://arxiv.org/abs/2212.09748',label:'DiT paper'},{type:'paper',url:'https://arxiv.org/abs/2210.02747',label:'Flow Matching paper'}],
+  // Leadership
+  'Writing Compelling RFCs': [{type:'doc',url:'https://www.rfc-editor.org/rfc/rfc2119',label:'RFC standards'},{type:'doc',url:'https://blog.pragmaticengineer.com/rfcs-and-adrs/',label:'RFCs in practice'}],
+  'Reading Papers Efficiently': [{type:'paper',url:'https://web.stanford.edu/class/ee384m/Handouts/HowtoReadPaper.pdf',label:'Keshav 3-pass method'},{type:'doc',url:'https://paperswithcode.com/',label:'Papers With Code'}],
+  'Open Source Contribution': [{type:'doc',url:'https://huggingface.co/docs/transformers/contributing',label:'HF contributing guide'},{type:'doc',url:'https://github.com/pytorch/pytorch/blob/main/CONTRIBUTING.md',label:'PyTorch CONTRIBUTING'}],
+  'Conference Publishing': [{type:'doc',url:'https://neurips.cc/',label:'NeurIPS'},{type:'doc',url:'https://icml.cc/',label:'ICML'},{type:'doc',url:'https://iclr.cc/',label:'ICLR'}],
+};
+
 /* ===================================================================
    DATA
 =================================================================== */
@@ -788,9 +1147,11 @@ function openModal(id){
     const topicsHtml=s.topics.map((t,ti)=>{
       const id=tid(d.id,s.title,ti);
       const isDone=done.has(id);
-      return `<div class="ti${isDone?' done':''}" id="ti_${d.id}_${si}_${ti}"><div class="ti-n">${t.n}</div><div class="ti-d">${t.d}</div><div class="ti-chk" onclick="toggleTopic(event,'${id}','${d.id}','${si}','${ti}')">✓</div></div>`;
+      const topicLinks=TOPIC_LINKS[t.n]||[];
+      const linksHtml=topicLinks.length?`<div class="ti-links">${topicLinks.map(l=>`<a class="ti-link ${l.type}" href="${l.url}" target="_blank" rel="noopener">${l.type==='yt'?'▶':l.type==='paper'?'📄':l.type==='book'?'📖':'📘'} ${l.label}</a>`).join('')}</div>`:'';
+      return `<div class="ti${isDone?' done':''}${topicLinks.length?' has-res':''}" id="ti_${d.id}_${si}_${ti}"><div class="ti-n">${t.n}</div><div class="ti-d">${t.d}</div>${linksHtml}<div class="ti-chk" onclick="toggleTopic(event,'${id}','${d.id}','${si}','${ti}')">✓</div></div>`;
     }).join('');
-    const resHtml=s.res?`<div class="res-row">${s.res.map(r=>`<span class="res-chip">📚 ${r}</span>`).join('')}</div>`:'';
+    const resHtml=s.res?`<div class="res-hdr">📚 Resources</div><div class="res-row">${s.res.map(r=>{const link=RESOURCE_LINKS[r];return link?`<a class="res-chip has-link" href="${link}" target="_blank" rel="noopener">🔗 ${r}</a>`:`<span class="res-chip">📚 ${r}</span>`}).join('')}</div>`:'';
     return `<div class="acc"><div class="acc-h" onclick="toggleAcc('${sid}',this)"><span class="acc-num">${String(si+1).padStart(2,'0')}</span><span class="acc-title">${s.title}</span><span class="acc-meta">${s.topics.length} topics</span><span class="acc-tog">▶</span></div><div class="acc-b" id="${sid}"><div class="tgrid">${topicsHtml}</div>${resHtml}</div></div>`;
   }).join('');
   document.getElementById('mbg').classList.add('open');
@@ -838,8 +1199,49 @@ function updateWidget(){
 }
 
 /* ===================================================================
-   EVENTS
+   SEARCH & FILTER
 =================================================================== */
+function initSearch(){
+  const box=document.getElementById('search-box');
+  const cnt=document.getElementById('search-count');
+  box.addEventListener('input',()=>{
+    const q=box.value.trim().toLowerCase();
+    let visible=0;
+    DOMAINS.forEach(d=>{
+      const card=document.querySelector(`[id^="dpf_${d.id}"]`)?.closest('.dcard');
+      if(!card)return;
+      if(!q){card.classList.remove('hidden');visible++;return;}
+      const text=`${d.title} ${d.tag} ${d.desc} ${d.chips.join(' ')} ${d.sections.map(s=>s.title+' '+s.topics.map(t=>t.n+' '+t.d).join(' ')).join(' ')}`.toLowerCase();
+      if(text.includes(q)){card.classList.remove('hidden');visible++;}
+      else{card.classList.add('hidden');}
+    });
+    cnt.textContent=q?`${visible} domains match`:'' ;
+    // show/hide phase sections based on visible cards
+    document.querySelectorAll('.phase-sec').forEach(sec=>{
+      const hasVisible=[...sec.querySelectorAll('.dcard')].some(c=>!c.classList.contains('hidden'));
+      sec.style.display=hasVisible||!q?'':'none';
+    });
+  });
+  // filter pills
+  document.querySelectorAll('.f-pill').forEach(pill=>{
+    pill.addEventListener('click',()=>{
+      document.querySelectorAll('.f-pill').forEach(p=>p.classList.remove('active'));
+      pill.classList.add('active');
+      const ph=pill.dataset.phase;
+      DOMAINS.forEach(d=>{
+        const card=document.querySelector(`[id^="dpf_${d.id}"]`)?.closest('.dcard');
+        if(!card)return;
+        card.classList.toggle('hidden',ph!=='all'&&String(d.phase)!==ph);
+      });
+      document.querySelectorAll('.phase-sec').forEach(sec=>{
+        const hasVisible=[...sec.querySelectorAll('.dcard')].some(c=>!c.classList.contains('hidden'));
+        sec.style.display=hasVisible?'':'none';
+      });
+    });
+  });
+}
+
+
 document.getElementById('mbg').addEventListener('click',e=>{if(e.target===document.getElementById('mbg'))closeModal()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 
@@ -852,6 +1254,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   buildPhases();
   buildTimeline();
   updateWidget();
+  initSearch();
 });
 </script>
 </body>
